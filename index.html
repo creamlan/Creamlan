@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creamlan Store - Dịch vụ số, tài khoản Premium & AI chính chủ</title>
+  <meta name="description" content="Creamlan Store chuyên cung cấp & nâng cấp chính chủ các gói ChatGPT Plus/Edu, Google Gemini Ultra/Pro, Claude Pro, Canva Pro, CapCut Pro, Netflix 4K, YouTube Premium, Locket Gold, Spotify uy tín, thanh toán VietQR Eximbank.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563eb'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Về đầu trang">
+        <span class="brand-mark"></span>
+        <span class="brand-title">Creamlan Store</span>
+      </a>
+      <div class="nav-center">Chọn gói · Tạo QR · Gửi Zalo</div>
+      <div class="nav-actions">
+        <a class="top-btn zalo" href="https://zalo.me/0327620117" target="_blank" rel="noopener">Zalo</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-main">
+          <div class="hero-copy">
+            <h1><span>Creamlan Store</span><span>cung cấp dịch vụ mạng&phần mềm số.</span></h1>
+            <p class="lead">Chuyên cung cấp & nâng cấp chính chủ các gói ChatGPT Plus/Edu, Google Gemini Ultra/Pro, Claude Pro, Canva Pro, CapCut Pro, Netflix 4K, YouTube Premium, Locket Gold, Spotify...</p>
+            <div class="hero-actions">
+              <a class="btn btn-main" href="#products">Xem sản phẩm</a>
+              <a class="btn btn-ghost" href="https://zalo.me/0327620117" target="_blank" rel="noopener">Tư vấn</a>
+            </div>
+          </div>
+          <div class="stats-bar glass" aria-label="Thống kê shop">
+            <div class="stat"><b id="totalProducts">22</b><span>Sản phẩm</span></div>
+            <div class="stat"><b id="totalPlans">54</b><span>Tổng gói</span></div>
+            <div class="stat"><b>100%</b><span>Chính chủ / Bản quyền</span></div>
+          </div>
+        </div>
+        <aside class="featured-panel" aria-label="Sản phẩm nổi bật">
+          <h3>Sản phẩm nổi bật</h3>
+          <div id="featuredGrid" class="featured-grid"></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Benefits Promo Banner -->
+    <section class="container benefits-section">
+      <div class="promo-banner glass">
+        <div>
+          <div class="eyebrow">Bán hàng chuyên nghiệp, hỗ trợ nhanh</div>
+          <h3>Chọn gói phù hợp, thanh toán dễ dàng và nhận tư vấn trực tiếp qua Zalo.</h3>
+          <p>Creamlan Store tập trung vào trải nghiệm mua hàng rõ ràng, minh bạch và nhanh chóng cho khách hàng.</p>
+        </div>
+        <a class="btn btn-main" href="https://zalo.me/0327620117" target="_blank" rel="noopener">Liên hệ ngay</a>
+      </div>
+    </section>
+
+    <!-- Products Catalog Section -->
+    <section id="products" class="container products-section">
+      <div class="section-row">
+        <div class="section-title">
+          <h2>Sản phẩm nổi bật</h2>
+          <label class="search-wrap">⌕ <input id="searchInput" type="search" placeholder="Tìm kiếm..." autocomplete="off"></label>
+        </div>
+        <div class="filters">
+          <div id="chips" class="chips"></div>
+          <label class="select-field"><select id="categoryFilter"><option value="all">Tất cả danh mục</option></select></label>
+          <label class="select-field"><select id="stockFilter"><option value="all">Tất cả</option><option value="available">Có giá bán</option><option value="out">Hết hàng</option></select></label>
+        </div>
+      </div>
+      <div class="result-hint"><span><b id="resultCount">0</b> sản phẩm phù hợp</span><span>Chạm sản phẩm để chọn gói</span></div>
+      
+      <!-- Quick App Rail with Prev and Next buttons -->
+      <div class="app-rail-wrap">
+        <button id="railPrev" class="rail-btn rail-prev" type="button" aria-label="Cuộn sang trái">‹</button>
+        <div id="quickRail" class="app-rail"></div>
+        <button id="railNext" class="rail-btn rail-next" type="button" aria-label="Cuộn sang phải">›</button>
+      </div>
+      
+      <div id="productGroups" class="product-grid"></div>
+      <div id="empty" class="empty">Không tìm thấy sản phẩm phù hợp. Hãy thử từ khóa khác hoặc chọn “Tất cả”.</div>
+    </section>
+  </main>
+
+  <!-- 3-Column Footer Matching Screenshot -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-col-brand">
+        <div class="brand-badge-row">
+          <div class="brand-circle-logo">C</div>
+          <span class="brand-title-footer">Creamlan</span>
+        </div>
+        <p class="brand-desc-footer">Hệ thống cung cấp tài khoản bản quyền AI, Thiết kế đồ họa, Giải trí và Học tập uy tín. Mọi thông tin giá bán và bảo hành đều minh bạch theo bảng tính gốc.</p>
+      </div>
+      <div class="footer-col-payment">
+        <h4 class="footer-heading">THÔNG TIN THANH TOÁN</h4>
+        <div class="payment-detail-line">Ngân hàng: <b>Eximbank</b></div>
+        <div class="payment-detail-line">Số tài khoản: <span class="highlight-stk">0327620117</span></div>
+        <div class="payment-detail-line">Chủ tài khoản: <b>CAO THANH HẢI</b></div>
+      </div>
+      <div class="footer-col-contact">
+        <h4 class="footer-heading">LIÊN HỆ HỖ TRỢ CHÍNH THỨC</h4>
+        <div class="support-contact-box">
+          <div class="support-row">
+            <span class="support-label">Zalo chính thức:</span>
+            <a class="support-link-zalo" href="https://zalo.me/0327620117" target="_blank" rel="noopener">0327620117</a>
+          </div>
+          <div class="support-row">
+            <span class="support-label">Facebook:</span>
+            <a class="support-link-fb" href="https://www.facebook.com/creamlan.1409/" target="_blank" rel="noopener">fb.com/creamlan.1409</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom-bar">
+      © 2026 Creamlan Store. Dịch vụ số, tài khoản Premium & AI bản quyền.
+    </div>
+  </footer>
+
+  <!-- Mobile Floating CTAs -->
+  <div class="mobile-cta" aria-label="Tác vụ nhanh">
+    <a class="mobile-cta-btn main" href="https://zalo.me/0327620117" target="_blank" rel="noopener">💬 Zalo</a>
+    <a class="mobile-cta-btn" href="#products">🛍️ Xem hàng</a>
+  </div>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="bottom-nav" aria-label="Thanh điều hướng nhanh">
+    <div class="bottom-nav-inner">
+      <a class="tab active" href="#products"><span><b>⌂</b>Sản phẩm</span></a>
+      <a class="tab" href="#products" id="categoryTab"><span><b>☷</b>Danh mục</span></a>
+      <a class="tab" href="https://zalo.me/0327620117" target="_blank" rel="noopener"><span><b>ⓩ</b>Zalo</span></a>
+      <a class="tab" href="https://www.facebook.com/creamlan.1409/" target="_blank" rel="noopener"><span><b>♧</b>Facebook</span></a>
+    </div>
+  </nav>
+
+  <!-- Modal Chi Tiết & Thanh Toán -->
+  <div id="productModal" class="modal-backdrop" aria-hidden="true">
+    <div id="modalSheet" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div id="modalLogo" class="modal-logo"></div>
+        <div class="modal-title">
+          <h3 id="modalTitle"></h3>
+          <div id="modalSub" class="modal-sub"></div>
+        </div>
+        <button class="close" type="button" aria-label="Đóng" data-close>×</button>
+      </div>
+      <div class="modal-body">
+        <aside class="modal-preview">
+          <div id="modalProductImage" class="modal-big-icon"></div>
+          <p id="modalDesc" class="modal-desc"></p>
+        </aside>
+        <div>
+          <div class="plans-title"><div class="eyebrow">Chọn gói</div><span id="modalPlanCount" class="tag"></span></div>
+          <div id="modalPlans" class="plans-grid"></div>
+
+          <div id="checkoutForm" class="checkout-form">
+            <div class="checkout-title">
+              <b>Thông tin khách hàng & QR thanh toán</b>
+              <span class="bank-badge">Eximbank - 0327620117</span>
+            </div>
+            <div id="selectedPlanBox" class="selected-box"><b>Chưa chọn gói.</b><br>Chạm vào một gói ở phía trên để tạo QR đúng số tiền.</div>
+            <div class="customer-fields">
+              <label>Họ tên khách hàng *<input id="customerName" type="text" placeholder="Ví dụ: Đỗ Việt Mạnh" autocomplete="name"></label>
+              <label>Số điện thoại *<input id="customerPhone" type="tel" placeholder="Ví dụ: 0987654321" autocomplete="tel" inputmode="numeric"></label>
+            </div>
+            <div class="checkout-actions">
+              <button id="createQrBtn" class="btn btn-main" type="button">Tạo QR thanh toán</button>
+              <a id="zaloGeneral" class="btn btn-ghost" href="https://zalo.me/0327620117" target="_blank" rel="noopener">Gửi đơn Zalo</a>
+            </div>
+            <div id="paymentError" class="payment-error"></div>
+            <div id="paymentResult" class="payment-result">
+              <div class="qr-box">
+                <div class="qr"><img id="qrImage" src="" alt="QR thanh toán VietQR"></div>
+                <div>
+                  <div id="paymentStatusBadge" class="waiting"><span class="pulse-dot"></span> Đang chờ khách chuyển khoản</div>
+                  <p id="paymentNote" class="modal-desc" style="margin-top:12px">Quý khách vui lòng quét mã QR bằng ứng dụng ngân hàng. Sau khi chuyển khoản thành công, hãy bấm 'Tôi đã chuyển khoản' để sao chép mã đơn và gửi cho chúng tôi qua Zalo</p>
+                  <div class="payment-info-grid">
+                    <div class="payment-info"><span>Số tiền</span><b id="paymentAmount">-</b></div>
+                    <div class="payment-info"><span>Nội dung CK</span><b id="paymentContent">-</b></div>
+                    <div class="payment-info"><span>SĐT khách</span><b id="paymentPhone">-</b></div>
+                    <div class="payment-info"><span>Mã đơn</span><b id="paymentOrderCode">-</b></div>
+                  </div>
+                  <div class="checkout-actions">
+                    <button id="copyPaymentBtn" class="btn btn-blue" type="button">Copy nội dung CK</button>
+                    <button id="copyOrderBtn" class="btn btn-ghost" type="button">Copy đơn hàng</button>
+                    <button id="confirmPaymentBtn" class="btn btn-main" type="button">Tôi đã chuyển khoản</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
