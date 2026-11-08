@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>shopmanhgold Premium Store</title>
+  <meta name="description" content="shopmanhgold Premium Store - chọn gói, tạo QR VietQR, gửi đơn Zalo." />
+  <meta name="theme-color" content="#030712" />
+  <style>
+    :root{
+      --bg:#030712;
+      --panel:rgba(15, 23, 42, 0.65);
+      --card:rgba(30, 41, 59, 0.5);
+      --cardHover:rgba(30, 41, 59, 0.9);
+      --line:rgba(255,255,255,0.08);
+      --line2:rgba(255,255,255,0.15);
+      --text:#f8fafc;
+      --muted:#94a3b8;
+      --gold:#f59e0b;
+      --gold-hover:#fbbf24;
+      --blue:#2563eb;
+      --radius:16px;
+      --shadow:0 12px 40px rgba(0,0,0,0.4);
+      --safe-bottom:env(safe-area-inset-bottom,0px);
+    }
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    img{max-width:100%;height:auto;display:block}
+    body{
+      margin:0;min-height:100vh;color:var(--text);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(circle at 15% 10%, rgba(37, 99, 235, 0.15) 0, transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(245, 158, 11, 0.1) 0, transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.05) 0, transparent 50%);
+      overflow-x:hidden;padding-bottom:86px;overscroll-behavior-y:contain;touch-action:manipulation;
+      -webkit-font-smoothing: antialiased;
+    }
+    body:before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to bottom,rgba(0,0,0,1),rgba(0,0,0,.2) 60%,transparent 100%)}
+    body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,transparent 0%,#030712 90%)}
+    a{color:inherit;text-decoration:none} button,input,select{font:inherit} button{cursor:pointer;border:0;color:inherit;background:none}.container{width:min(1720px,calc(100% - 112px));margin:0 auto}.glass{background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+    .topbar{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line);background:rgba(3, 7, 18, 0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+    .nav{height:60px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}.brand{display:flex;align-items:center;gap:10px;min-width:0}.brand-mark{width:0;height:0;display:none}.brand-title{font-size:20px;font-weight:900;letter-spacing:-.035em;white-space:nowrap}.nav-center{color:#cbd5e1;font-size:14px;font-weight:600}.nav-actions{justify-self:end;display:flex;align-items:center;gap:10px}.top-btn{height:36px;min-width:82px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:700;padding:0 18px;transition:.2s ease}.top-btn.zalo{background:var(--blue);color:#fff}.top-btn.playlist{background:var(--card);color:#e2e8f0;border:1px solid var(--line)}.top-btn:hover{transform:translateY(-1px);filter:brightness(1.1)}
+    
+    /* Layout Hero sử dụng CSS Grid để chống đè nội dung */
+    .hero{position:relative;padding:70px 0 40px}
+    .hero-inner{display:grid;grid-template-columns:1fr 310px;gap:40px;align-items:stretch}
+    .hero-main{display:flex;flex-direction:column;justify-content:center}
+    .hero-copy{max-width:640px;position:relative;z-index:2}.hero h1{margin:0;font-size:clamp(40px,4.5vw,72px);line-height:1;letter-spacing:-.04em;font-weight:900}.hero h1 span:first-child{display:block;color:var(--gold);background:linear-gradient(to right,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.hero h1 span:last-child{display:block;color:#f8fafc}.lead{margin:18px 0 0;max-width:480px;color:#94a3b8;font-size:16px;line-height:1.5;letter-spacing:.01em}.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}.btn{height:48px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 24px;font-weight:700;font-size:14.5px;transition:transform .18s ease,filter .18s ease,background .18s ease,border-color .18s ease;white-space:nowrap}.btn:active,.product-card:active,.app-icon:active,.chip:active,.plan-option:active{transform:scale(.97)}.btn-main{background:linear-gradient(135deg,var(--gold),#d97706);color:#0f172a;box-shadow:0 8px 24px rgba(245,158,11,0.25)}.btn-ghost{border:1px solid var(--line2);color:#e2e8f0;background:rgba(255,255,255,0.03)}.btn-ghost:hover{background:rgba(255,255,255,0.08)}.btn-blue{background:var(--blue);color:white}
+    
+    .stats-bar{margin-top:60px;width:100%;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;border-radius:20px;overflow:hidden}.stat{height:88px;display:grid;place-items:center;text-align:center;position:relative}.stat:not(:last-child):after{content:"";position:absolute;right:0;top:24px;bottom:24px;width:1px;background:var(--line)}.stat b{display:block;font-size:26px;line-height:1;font-weight:900}.stat span{display:block;margin-top:6px;color:#94a3b8;font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.05em}
+    
+    /* Box Sản phẩm nổi bật được đặt tĩnh (static) để không lอย */
+    .featured-panel{width:100%;border-radius:20px;padding:24px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}.featured-panel h3{margin:0 0 16px;font-size:17px;font-weight:700;color:#f8fafc}.featured-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.featured-item{height:auto;min-height:130px;border-radius:14px;background:var(--card);border:1px solid var(--line);padding:14px 10px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:12px;text-align:center;transition:.2s ease;overflow:hidden}.featured-item:hover{transform:translateY(-4px);background:var(--cardHover);border-color:var(--line2)}.featured-item .icon-box{width:64px;height:64px;flex-shrink:0;margin:0 auto;border-radius:14px;background:#0f172a;display:grid;place-items:center;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}.featured-item span:last-child{font-size:13.5px;font-weight:600;line-height:1.4;color:#f8fafc;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;width:100%}
+    
+    .products-section{position:relative;padding:20px 0 60px}.section-row{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:16px}.section-title{display:flex;align-items:center;gap:20px;min-width:0}.section-title h2{margin:0;font-size:24px;letter-spacing:-.02em;font-weight:800}.search-wrap{height:44px;width:min(340px,35vw);display:flex;align-items:center;gap:10px;border-radius:12px;background:var(--card);border:1px solid var(--line);padding:0 14px;color:#94a3b8;transition:.2s}.search-wrap:focus-within{border-color:var(--line2);background:var(--cardHover)}.search-wrap input{width:100%;height:100%;border:0;outline:0;background:transparent;color:white;font-size:14.5px}.search-wrap input::placeholder{color:#64748b}.filters{display:flex;align-items:center;gap:10px;min-width:0}.chips{display:flex;align-items:center;gap:10px;overflow:auto;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{height:36px;border-radius:10px;background:var(--card);border:1px solid transparent;color:#cbd5e1;padding:0 16px;font-weight:600;font-size:13.5px;white-space:nowrap;transition:.2s}.chip:hover{background:var(--cardHover)}.chip.active{background:rgba(245,158,11,0.15);color:var(--gold-hover);border-color:rgba(245,158,11,0.3)}.select-field{display:none}.result-hint{color:#64748b;font-size:13px;font-weight:500;margin:0 0 16px;display:flex;align-items:center;justify-content:space-between}.app-rail-wrap{position:relative;margin:10px 0 24px}.app-rail{display:flex;gap:18px;align-items:center;overflow-x:auto;padding:0 54px 10px 8px;scrollbar-width:none}.app-rail::-webkit-scrollbar{display:none}.app-icon{width:76px;height:76px;flex:0 0 auto;border-radius:16px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;padding:12px;transition:.2s ease;box-shadow:0 8px 20px rgba(0,0,0,.2)}.app-icon:hover{transform:translateY(-4px);background:var(--cardHover);border-color:var(--line2)}.rail-next{position:absolute;right:0;top:calc(50% - 5px);transform:translateY(-50%);width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(15,23,42,0.95);border:1px solid var(--line2);font-size:24px;box-shadow:0 4px 12px rgba(0,0,0,.3);color:#cbd5e1}.product-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}.product-card{min-height:210px;border-radius:16px;background:var(--card);border:1px solid var(--line);overflow:hidden;padding:16px;display:grid;grid-template-rows:116px auto 1fr;transition:transform .2s ease,background .2s ease,border-color .2s ease;box-shadow:0 10px 30px rgba(0,0,0,.15)}.product-card:hover{transform:translateY(-6px);background:var(--cardHover);border-color:var(--line2)}.product-icon{width:116px;height:116px;border-radius:18px;margin:0 auto;background:#0f172a;display:grid;place-items:center;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),0 12px 24px rgba(0,0,0,.3);padding:14px}.icon-fallback{width:100%;height:100%;display:grid;place-items:center;font-size:32px;font-weight:900;background:linear-gradient(135deg,#1e293b,#0f172a);color:#fff}.product-name{margin-top:14px;line-height:1.3;font-size:15.5px;font-weight:700;color:#f8fafc;min-height:40px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.product-meta{margin-top:6px;color:#64748b;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.product-price{margin-top:12px;color:var(--gold-hover);font-size:16px;font-weight:800}.out-price{color:#f87171}.empty{display:none;text-align:center;padding:60px 20px;border-radius:16px;color:#94a3b8;background:var(--card);border:1px solid var(--line)}
+    
+    .icon-box img, .product-icon img, .app-icon img, .modal-big-icon img {width:100%;height:100%;object-fit:contain;border-radius:inherit}
+    
+    .modal-backdrop{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.75);padding:24px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}.modal-backdrop.active{display:flex}.modal{width:min(1020px,100%);max-height:calc(100vh - 48px);overflow:auto;border-radius:24px;background:var(--bg);border:1px solid var(--line2);box-shadow:0 40px 100px rgba(0,0,0,.6);animation:modalIn .25s cubic-bezier(0.16, 1, 0.3, 1)}@keyframes modalIn{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}.modal-head{position:sticky;top:0;z-index:2;display:grid;grid-template-columns:86px 1fr 44px;gap:16px;align-items:center;padding:20px;background:rgba(3, 7, 18, 0.85);border-bottom:1px solid var(--line);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}.modal-logo{width:86px;height:86px;border-radius:20px;background:#0f172a;display:grid;place-items:center;overflow:hidden;box-shadow:inset 0 0 0 1px var(--line);padding:10px}.modal-title h3{margin:0;font-size:30px;line-height:1.1;letter-spacing:-.03em;font-weight:800}.modal-sub{margin-top:6px;color:#94a3b8;font-size:14px;font-weight:500}.close{width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--line);font-size:24px;color:#cbd5e1;transition:.2s}.close:hover{background:var(--cardHover);color:#fff}.modal-body{display:grid;grid-template-columns:320px 1fr;gap:24px;padding:24px}.modal-preview{border-radius:20px;background:var(--card);border:1px solid var(--line);padding:20px;display:flex;flex-direction:column;gap:16px;height:fit-content}.modal-big-icon{width:200px;height:200px;border-radius:30px;margin:0 auto;display:grid;place-items:center;overflow:hidden;background:#0f172a;box-shadow:inset 0 0 0 1px var(--line),0 20px 40px rgba(0,0,0,.3);padding:24px}.modal-desc{margin:0;color:#cbd5e1;line-height:1.6;font-size:14.5px}.plans-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}.eyebrow{color:var(--gold);font-size:12px;text-transform:uppercase;letter-spacing:.15em;font-weight:800}.tag{display:inline-flex;align-items:center;min-height:28px;border-radius:99px;border:1px solid var(--line);background:var(--card);padding:0 12px;font-size:12px;font-weight:600;color:#cbd5e1}.plans-grid{display:grid;gap:10px}.plan-option{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;text-align:left;border-radius:16px;border:1px solid var(--line);background:var(--card);padding:14px;transition:.2s ease}.plan-option:hover,.plan-option.active{background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.4)}.plan-option.unavailable{opacity:.6}.plan-name{display:block;font-size:15px;font-weight:700;color:#f8fafc}.plan-note{display:block;color:#94a3b8;line-height:1.4;font-size:13px;margin-top:6px}.plan-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.meta{border:1px solid var(--line);background:rgba(15,23,42,0.6);border-radius:6px;color:#cbd5e1;padding:4px 8px;font-size:11.5px;font-weight:500}.plan-price{color:var(--gold-hover);font-size:17px;font-weight:800;white-space:nowrap}.checkout-form{margin-top:20px;border-radius:20px;border:1px solid rgba(37,99,235,0.25);background:rgba(37,99,235,0.06);padding:20px}.checkout-title{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}.checkout-title b{font-size:17px;color:#f8fafc}.bank-badge{border:1px solid var(--line2);background:var(--card);border-radius:8px;padding:8px 12px;font-size:12.5px;font-weight:700;white-space:nowrap}.selected-box{border-radius:14px;border:1px solid var(--line2);background:var(--bg);padding:14px;color:#cbd5e1;line-height:1.6;font-size:14px;margin-bottom:16px}.selected-box b{color:white}.customer-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.customer-fields label{display:grid;gap:8px;color:#94a3b8;font-size:13.5px;font-weight:600}.customer-fields input{height:50px;border:1px solid var(--line2);background:var(--bg);color:white;border-radius:12px;outline:0;padding:0 16px;font-size:14.5px;transition:.2s}.customer-fields input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(37,99,235,0.15)}.checkout-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.payment-error{display:none;margin-top:14px;border-radius:12px;border:1px solid rgba(248,113,113,0.3);background:rgba(248,113,113,0.1);color:#fca5a5;padding:12px 14px;line-height:1.5;font-size:14px}.payment-result{display:none;margin-top:16px}.payment-result.active{display:block}.qr-box{display:grid;grid-template-columns:210px 1fr;gap:20px;align-items:center;border-radius:16px;border:1px solid var(--line2);background:var(--bg);padding:16px}.qr{width:200px;height:200px;border-radius:16px;background:white;padding:12px;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.2)}.qr img{width:100%;height:100%;object-fit:contain}.waiting{display:inline-flex;align-items:center;gap:10px;color:var(--gold-hover);background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);padding:8px 14px;border-radius:99px;font-weight:700;font-size:13.5px}.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(245,158,11,0.5);animation:pulse 1.5s infinite}@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(245,158,11,0)}100%{box-shadow:0 0 0 0 rgba(245,158,11,0)}}.payment-info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}.payment-info{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px}.payment-info span{display:block;color:#64748b;text-transform:uppercase;letter-spacing:.08em;font-size:10.5px;font-weight:700;margin-bottom:6px}.payment-info b{word-break:break-word;font-size:14px;color:#f8fafc}.toast{position:fixed;left:50%;bottom:calc(88px + var(--safe-bottom));transform:translateX(-50%) translateY(20px);z-index:200;opacity:0;pointer-events:none;background:#f8fafc;color:#0f172a;border-radius:99px;padding:12px 20px;font-weight:700;font-size:14px;box-shadow:0 16px 40px rgba(0,0,0,.3);transition:.25s cubic-bezier(0.16, 1, 0.3, 1)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .music-player{position:fixed;right:20px;bottom:calc(80px + var(--safe-bottom));z-index:45;width:min(340px,calc(100vw - 40px));height:64px;border-radius:14px;background:rgba(15,23,42,0.85);border:1px solid var(--line2);box-shadow:var(--shadow);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:grid;grid-template-columns:46px 1fr 90px;align-items:center;gap:12px;padding:8px 12px}.player-disc{width:42px;height:42px;border-radius:10px;background:var(--card);display:grid;place-items:center;color:#94a3b8;font-size:22px}.player-disc.spin{animation:spin 4s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.player-info{min-width:0}.track-title{font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f8fafc}.track-artist{margin-top:4px;color:#94a3b8;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.player-hint,.player-kicker{display:none}.player-controls{display:flex;align-items:center;justify-content:flex-end;gap:6px}.player-btn{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:#cbd5e1;font-size:14px;transition:.2s}.player-btn:hover{background:var(--cardHover);color:#fff}.player-btn.main{background:transparent;font-size:18px;color:#fff}.promo-banner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 24px;border-radius:20px;margin:0 0 24px}.promo-banner h3{margin:6px 0 6px;font-size:22px;letter-spacing:-.02em}.promo-banner p{margin:0;color:#cbd5e1;line-height:1.6}.benefits-section,.order-section{padding:0 0 60px}.benefit-grid,.order-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:18px}.benefit-card,.order-step{padding:20px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:0 10px 24px rgba(0,0,0,.15)}.benefit-icon,.step-number{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:rgba(245,158,11,0.16);color:var(--gold-hover);font-size:20px;font-weight:800;margin-bottom:12px}.benefit-card h4,.order-step h4{margin:0 0 8px;font-size:16px}.benefit-card p,.order-step p{margin:0;color:#cbd5e1;line-height:1.6;font-size:14px}.mobile-cta{position:fixed;left:12px;right:12px;bottom:calc(76px + var(--safe-bottom));z-index:41;display:none;gap:10px}.mobile-cta-btn{flex:1;height:46px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:14px;border:1px solid var(--line2);background:rgba(15,23,42,0.9);color:#f8fafc;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}.mobile-cta-btn.main{background:linear-gradient(135deg,var(--gold),#d97706);color:#0f172a;border-color:transparent}.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:42;height:66px;padding-bottom:var(--safe-bottom);background:rgba(3,7,18,0.85);border-top:1px solid var(--line2);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:grid;place-items:center}.bottom-nav-inner{width:min(760px,100%);display:grid;grid-template-columns:repeat(4,1fr);height:66px}.tab{display:grid;place-items:center;color:#64748b;font-size:12px;font-weight:600;transition:.2s}.tab:hover{color:#cbd5e1}.tab b{display:block;font-size:22px;line-height:1;margin-bottom:4px;color:var(--gold)}.tab.active{color:#f8fafc}footer{color:#64748b;text-align:center;font-size:13px;padding:20px 12px 40px}.hide{display:none!important}
+    
+    @media (max-width:1280px){.container{width:min(1180px,calc(100% - 56px))}.product-grid{grid-template-columns:repeat(4,1fr)}.stats-bar{width:min(760px,68vw)}}
+    @media (max-width:1080px){.hero-inner{grid-template-columns:1fr 280px;gap:24px}}
+    @media (max-width:980px){
+      body{padding-bottom:142px}.container{width:min(100% - 32px,900px)}.nav{grid-template-columns:1fr auto}.nav-center{display:none}
+      .hero{padding:50px 0 24px}.hero-inner{grid-template-columns:1fr}.featured-panel{display:none}.stats-bar{width:100%;margin-top:40px}
+      .section-row{display:grid;gap:14px}.section-title{display:grid;gap:12px}.search-wrap{width:100%}.filters{overflow:hidden}
+      .product-grid{grid-template-columns:repeat(3,1fr)}.modal-body{grid-template-columns:1fr}.modal-preview{flex-direction:row;align-items:center}.modal-big-icon{width:140px;height:140px;margin:0}
+      .music-player{left:16px;right:16px;bottom:calc(76px + var(--safe-bottom));width:auto}.promo-banner{flex-direction:column;align-items:flex-start}.benefit-grid,.order-grid{grid-template-columns:1fr}.mobile-cta{display:flex}.bottom-nav{height:72px}.bottom-nav-inner{height:72px}.toast{bottom:calc(150px + var(--safe-bottom))}
+    }
+    @media (max-width:700px){
+      .container{width:min(100% - 24px,680px)}.nav{height:56px}.brand-title{font-size:18px}.top-btn{min-width:auto;height:34px;padding:0 14px}
+      .hero{padding-top:40px}.hero h1{font-size:42px}.lead{font-size:14.5px}.stats-bar{grid-template-columns:repeat(3,1fr);border-radius:16px}.stat{height:76px}.stat b{font-size:24px}.stat span{font-size:12px}
+      .app-rail{gap:14px;padding-left:2px}.app-icon{width:68px;height:68px;padding:10px;border-radius:14px}
+      .product-grid{grid-template-columns:repeat(2,1fr);gap:14px}.product-card{min-height:190px;padding:14px;grid-template-rows:108px auto 1fr;border-radius:14px}.product-icon{width:108px;height:108px;border-radius:16px;padding:12px}
+      .modal-backdrop{align-items:flex-end;padding:0}.modal{border-radius:28px 28px 0 0;max-height:92vh;width:100%}.modal-head{grid-template-columns:64px 1fr 40px;padding:16px}.modal-logo{width:64px;height:64px;border-radius:16px;padding:8px}.modal-title h3{font-size:24px}.modal-body{padding:16px 16px 84px}.modal-preview{flex-direction:column;align-items:center}.modal-big-icon{width:140px;height:140px;margin-bottom:0}
+      .plan-option{grid-template-columns:1fr}.plan-price{text-align:left}.customer-fields,.qr-box,.payment-info-grid{grid-template-columns:1fr}.qr{margin:0 auto}.checkout-title{display:grid}.bottom-nav-inner{width:100%}.track-title{font-size:13px}.music-player{height:60px;grid-template-columns:42px 1fr 80px}.player-btn{width:26px}.hero-actions .btn{flex:1}
+    }
+    @media (max-width:430px){
+      .product-grid{grid-template-columns:1fr 1fr}.product-name{font-size:14px}.product-price{font-size:15px}.product-card{min-height:180px}.product-icon{width:96px;height:96px}.app-icon{width:60px;height:60px}.section-title h2{font-size:20px}.chips{gap:8px}.chip{padding:0 14px;font-size:13px}.nav-actions{gap:8px}.top-btn.playlist{display:none}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Về đầu trang">
+        <span class="brand-mark"></span>
+        <span class="brand-title">shopmanhgold</span>
+      </a>
+      <div class="nav-center">Chọn gói · Tạo QR · Gửi Zalo</div>
+      <div class="nav-actions">
+        <a class="top-btn zalo" href="https://zalo.me/0876224207" target="_blank" rel="noopener">Zalo</a>
+        <button class="top-btn playlist" type="button" id="playlistTopBtn">Playlist</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-main">
+          <div class="hero-copy">
+            <h1><span>Premium store</span><span>cung cấp dịch vụ mạng&phần mềm số.</span></h1>
+            <p class="lead">Cửa hàng dịch vụ số, tài khoản Premium, công cụ học tập và AI. Chọn gói nhanh, tạo QR thanh toán và gửi đơn qua Zalo.</p>
+            <div class="hero-actions">
+              <a class="btn btn-main" href="#products">Xem sản phẩm</a>
+              <a class="btn btn-ghost" href="https://zalo.me/0876224207" target="_blank" rel="noopener">Tư vấn</a>
+            </div>
+          </div>
+          <div class="stats-bar glass" aria-label="Thống kê shop">
+            <div class="stat"><b id="totalProducts">0</b><span>Sản phẩm</span></div>
+            <div class="stat"><b id="totalPlans">0</b><span>Tổng gói</span></div>
+            <div class="stat"><b>♫</b><span>Player nhạc mini</span></div>
+          </div>
+        </div>
+        <aside class="featured-panel" aria-label="Sản phẩm nổi bật">
+          <h3>Sản phẩm nổi bật</h3>
+          <div id="featuredGrid" class="featured-grid"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="container benefits-section">
+      <div class="promo-banner glass">
+        <div>
+          <div class="eyebrow">Bán hàng chuyên nghiệp, hỗ trợ nhanh</div>
+          <h3>Chọn gói phù hợp, thanh toán dễ dàng và nhận tư vấn trực tiếp qua Zalo.</h3>
+          <p>Shopmanhgold tập trung vào trải nghiệm mua hàng rõ ràng, minh bạch và nhanh chóng cho khách hàng.</p>
+        </div>
+        <a class="btn btn-main" href="https://zalo.me/0876224207" target="_blank" rel="noopener">Liên hệ ngay</a>
+      </div>
+    </section>
+    <section id="products" class="container products-section">
+      <div class="section-row">
+        <div class="section-title">
+          <h2>Sản phẩm nổi bật</h2>
+          <label class="search-wrap">⌕ <input id="searchInput" type="search" placeholder="Tìm kiếm..." autocomplete="off"></label>
+        </div>
+        <div class="filters">
+          <div id="chips" class="chips"></div>
+          <label class="select-field"><select id="categoryFilter"><option value="all">Tất cả danh mục</option></select></label>
+          <label class="select-field"><select id="stockFilter"><option value="all">Tất cả</option><option value="available">Có giá bán</option><option value="out">Hết hàng</option></select></label>
+        </div>
+      </div>
+      <div class="result-hint"><span><b id="resultCount">0</b> sản phẩm phù hợp</span><span>Chạm sản phẩm để chọn gói</span></div>
+      <div class="app-rail-wrap">
+        <div id="quickRail" class="app-rail"></div>
+        <button id="railNext" class="rail-next" type="button" aria-label="Cuộn sản phẩm">›</button>
+      </div>
+      <div id="productGroups" class="product-grid"></div>
+      <div id="empty" class="empty">Không tìm thấy sản phẩm phù hợp. Hãy thử từ khóa khác hoặc chọn “Tất cả”.</div>
+    </section>
+  </main>
+
+  <footer>© 2026 shopmanhgold. Dịch vụ số, tài khoản Premium, phần mềm học tập và AI.</footer>
+
+  <div id="musicPlayer" class="music-player" aria-label="Trình phát nhạc">
+    <div id="playerDisc" class="player-disc">♫</div>
+    <div class="player-info">
+      <div class="player-kicker">Nhạc nền</div>
+      <div id="trackTitle" class="track-title">Tìm em ft. Bảo Anh</div>
+      <div id="trackArtist" class="track-artist">HNGLE / hưng lê</div>
+      <div id="playerHint" class="player-hint">Bấm ▶ để phát nhạc.</div>
+    </div>
+    <div class="player-controls">
+      <button id="prevTrackBtn" class="player-btn" type="button" aria-label="Bài trước">‹</button>
+      <button id="playPauseBtn" class="player-btn main" type="button" aria-label="Phát hoặc dừng">▶</button>
+      <button id="nextTrackBtn" class="player-btn" type="button" aria-label="Bài tiếp theo">›</button>
+    </div>
+    <audio id="audioPlayer" preload="auto"></audio>
+  </div>
+
+  <div class="mobile-cta" aria-label="Tác vụ nhanh">
+    <a class="mobile-cta-btn main" href="https://zalo.me/0876224207" target="_blank" rel="noopener">💬 Zalo</a>
+    <a class="mobile-cta-btn" href="#products">🛍️ Xem hàng</a>
+  </div>
+
+  <nav class="bottom-nav" aria-label="Thanh điều hướng nhanh">
+    <div class="bottom-nav-inner">
+      <a class="tab active" href="#products"><span><b>⌂</b>Sản phẩm</span></a>
+      <a class="tab" href="#products" id="categoryTab"><span><b>☷</b>Danh mục</span></a>
+      <a class="tab" href="https://zalo.me/0876224207" target="_blank" rel="noopener"><span><b>ⓩ</b>Zalo</span></a>
+      <a class="tab" href="https://zalo.me/g/nklulq502"><span><b>♧</b>Nhóm Zalo</span></a>
+    </div>
+  </nav>
+
+  <div id="productModal" class="modal-backdrop" aria-hidden="true">
+    <div id="modalSheet" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div id="modalLogo" class="modal-logo"></div>
+        <div class="modal-title">
+          <h3 id="modalTitle"></h3>
+          <div id="modalSub" class="modal-sub"></div>
+        </div>
+        <button class="close" type="button" aria-label="Đóng" data-close>×</button>
+      </div>
+      <div class="modal-body">
+        <aside class="modal-preview">
+          <div id="modalProductImage" class="modal-big-icon"></div>
+          <p id="modalDesc" class="modal-desc"></p>
+        </aside>
+        <div>
+          <div class="plans-title"><div class="eyebrow">Chọn gói</div><span id="modalPlanCount" class="tag"></span></div>
+          <div id="modalPlans" class="plans-grid"></div>
+
+          <div id="checkoutForm" class="checkout-form">
+            <div class="checkout-title">
+              <b>Thông tin khách hàng & QR thanh toán</b>
+              <span class="bank-badge">🏦 Vietcombank · 1046049037</span>
+            </div>
+            <div id="selectedPlanBox" class="selected-box"><b>Chưa chọn gói.</b><br>Chạm vào một gói ở phía trên để tạo QR đúng số tiền.</div>
+            <div class="customer-fields">
+              <label>Họ tên khách hàng *<input id="customerName" type="text" placeholder="Ví dụ: Đỗ Việt Mạnh" autocomplete="name"></label>
+              <label>Số điện thoại *<input id="customerPhone" type="tel" placeholder="Ví dụ: 0987654321" autocomplete="tel" inputmode="numeric"></label>
+            </div>
+            <div class="checkout-actions">
+              <button id="createQrBtn" class="btn btn-main" type="button">Tạo QR thanh toán</button>
+              <a id="zaloGeneral" class="btn btn-ghost" href="https://zalo.me/0876224207" target="_blank" rel="noopener">Gửi đơn Zalo</a>
+            </div>
+            <div id="paymentError" class="payment-error"></div>
+            <div id="paymentResult" class="payment-result">
+              <div class="qr-box">
+                <div class="qr"><img id="qrImage" src="" alt="QR thanh toán VietQR"></div>
+                <div>
+                  <div id="paymentStatusBadge" class="waiting"><span class="pulse-dot"></span> Đang chờ khách chuyển khoản</div>
+                  <p id="paymentNote" class="modal-desc" style="margin-top:12px">Khách quét QR bằng app ngân hàng. Sau khi chuyển khoản xong, bấm “Tôi đã chuyển khoản” . Sau khi ấn tôi đã chuyển khoản hệ thống đã tự copy mã đơn hàng chỉ cần dán trực tiếp  qua zalo .</p>
+                  <div class="payment-info-grid">
+                    <div class="payment-info"><span>Số tiền</span><b id="paymentAmount">-</b></div>
+                    <div class="payment-info"><span>Nội dung CK</span><b id="paymentContent">-</b></div>
+                    <div class="payment-info"><span>SĐT khách</span><b id="paymentPhone">-</b></div>
+                    <div class="payment-info"><span>Mã đơn</span><b id="paymentOrderCode">-</b></div>
+                  </div>
+                  <div class="checkout-actions">
+                    <button id="copyPaymentBtn" class="btn btn-blue" type="button">Copy nội dung CK</button>
+                    <button id="copyOrderBtn" class="btn btn-ghost" type="button">Copy đơn hàng</button>
+                    <button id="confirmPaymentBtn" class="btn btn-main" type="button">Tôi đã chuyển khoản</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="toast" class="toast">Đã copy</div>
+
+  <script>
+    // CẬP NHẬT LẠI SỐ ĐIỆN THOẠI
+    const zaloPhone = "0876224207";
+    const zaloLink = "https://zalo.me/" + zaloPhone;
+    const bankId = "970436";
+    const bankName = "Vietcombank";
+    const bankAccountNo = "1046049037";
+    const bankAccountName = "SHOPMANHGOLD";
+
+
+    // ===== GOOGLE SHEETS API =====
+    // Bước 1: tạo Google Apps Script theo file google-apps-script/code.gs trong ZIP.
+    // Bước 2: deploy Web App và dán link /exec vào đây.
+    // Ví dụ: const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxxxxxxx/exec";
+    // Nếu để trống, web sẽ dùng dữ liệu mẫu đang nằm trong file này.
+    const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxueg0z7ajJWZc1k4NVNSf2CVS3gQTt-bgAIKOSjfBSXek81irTKFva-pCfVk7nZZ97/exec";
+
+    // Cập nhật hệ thống lấy Icon sử dụng tên miền (Sử dụng Google Favicon API siêu nét - Độ phân giải 256px)
+    const DEFAULT_PRODUCT_GROUPS = [
+      {"id":"grp-001","name":"Netflix Premium","brand":"Netflix","category":"Giải trí Premium","image":"netflix.com","glow":"linear-gradient(135deg,#E50914,#ff4b4b,#7f1d1d)","description":"Dịch vụ Netflix Premium dành cho nhu cầu xem phim, giải trí gia đình. Shop tư vấn gói phù hợp theo thời hạn sử dụng.","plans":[{"id":"sp-091","variant":"Gói xem phim chất lượng cao","accountType":"Liên hệ shop","duration":"1 tháng / 6 tháng / 1 năm","warranty":"Theo gói","price":"Liên hệ","note":"Liên hệ Zalo để nhận gói phù hợp và tình trạng mới nhất.","description":"Dịch vụ Netflix Premium dành cho nhu cầu xem phim, giải trí gia đình. Shop tư vấn gói phù hợp theo thời hạn sử dụng."}],"priceLabel":"Liên hệ","durationSummary":"1 tháng / 6 tháng / 1 năm","planCount":1},
+      {"id":"grp-003","name":"Spotify Premium","brand":"Spotify","category":"Giải trí Premium","image":"spotify.com","glow":"linear-gradient(135deg,#1DB954,#22c55e,#064e3b)","description":"Dịch vụ Spotify Premium dành cho nhu cầu nghe nhạc, podcast và giải trí hằng ngày.","plans":[{"id":"sp-093","variant":"Gói nghe nhạc Premium","accountType":"Liên hệ shop","duration":"1 tháng / 6 tháng / 1 năm","warranty":"Theo gói","price":"Liên hệ","note":"Liên hệ Zalo để nhận gói phù hợp và tình trạng mới nhất.","description":"Dịch vụ Spotify Premium dành cho nhu cầu nghe nhạc, podcast và giải trí hằng ngày."}],"priceLabel":"Liên hệ","durationSummary":"1 tháng / 6 tháng / 1 năm","planCount":1},
+      {"id":"grp-002","name":"YouTube Premium","brand":"YouTube","category":"Giải trí Premium","image":"youtube.com","glow":"linear-gradient(135deg,#FF0000,#ff5a5a,#7f1d1d)","description":"Dịch vụ YouTube Premium hỗ trợ trải nghiệm xem video mượt hơn, phù hợp nhu cầu cá nhân và gia đình.","plans":[{"id":"sp-092","variant":"Gói xem YouTube không quảng cáo","accountType":"Liên hệ shop","duration":"1 tháng / 6 tháng / 1 năm","warranty":"Theo gói","price":"Liên hệ","note":"Liên hệ Zalo để nhận gói phù hợp và tình trạng mới nhất.","description":"Dịch vụ YouTube Premium hỗ trợ trải nghiệm xem video mượt hơn, phù hợp nhu cầu cá nhân và gia đình."}],"priceLabel":"Liên hệ","durationSummary":"1 tháng / 6 tháng / 1 năm","planCount":1},
+      {"id":"grp-004","name":"Capcut Pro","brand":"CapCut","category":"Thiết kế - chỉnh sửa ảnh/video","image":"capcut.com","glow":"linear-gradient(135deg,#ffffff,#94a3b8,#475569)","description":"Sản phẩm: Capcut Pro. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Khách hàng gửi tài khoản, mật khẩu, log email cho shop nâng; hàng add team chính chủ, renew đủ 6 tháng.","plans":[{"id":"sp-001","variant":"Cấp sẵn dùng riêng","accountType":"Shop cấp tài khoản","duration":"7 ngày","warranty":"7 ngày","price":"29.000 đ","note":"Shop cấp tài khoản + mật khẩu nick, log email.","description":"Sản phẩm: Capcut Pro. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Shop cấp tài khoản. Thời hạn sử dụng: 7 ngày. Bảo hành: 7 ngày. Ghi chú: Shop cấp tài khoản + mật khẩu nick, log email."},{"id":"sp-002","variant":"Chính chủ","accountType":"Khách gửi mail CapCut","duration":"1 tháng","warranty":"1 tháng","price":"79.000 đ","note":"Khách gửi mail CapCut để shop xử lý.","description":"Sản phẩm: Capcut Pro. Gói/phiên bản: Chính chủ. Loại tài khoản: Khách gửi mail CapCut. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Khách gửi mail CapCut để shop xử lý."},{"id":"sp-003","variant":"Cấp sẵn - Team - renew","accountType":"Cấp sẵn team","duration":"3 tháng","warranty":"3 tháng","price":"Hết hàng","note":"Không đổi mail, không đổi pass. Hàng auto renew, shop có tool renew tự động.","description":"Sản phẩm: Capcut Pro. Gói/phiên bản: Cấp sẵn - Team - renew. Loại tài khoản: Cấp sẵn team. Thời hạn sử dụng: 3 tháng. Bảo hành: 3 tháng. Ghi chú: Không đổi mail, không đổi pass. Hàng auto renew, shop có tool renew tự động."},{"id":"sp-004","variant":"Cấp sẵn - Team - renew","accountType":"Cấp sẵn team","duration":"6 tháng","warranty":"6 tháng","price":"Hết hàng","note":"Không đổi mail, không đổi pass. Hàng auto renew, shop có tool renew tự động.","description":"Sản phẩm: Capcut Pro. Gói/phiên bản: Cấp sẵn - Team - renew. Loại tài khoản: Cấp sẵn team. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Không đổi mail, không đổi pass. Hàng auto renew, shop có tool renew tự động."},{"id":"sp-005","variant":"Cấp sẵn dùng riêng","accountType":"Shop cấp tài khoản","duration":"1 năm","warranty":"1 năm","price":"650.000 đ","note":"Shop cấp acc 1 tháng, hết hạn cấp acc mới đến đủ 1 năm.","description":"Sản phẩm: Capcut Pro. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Shop cấp tài khoản. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Shop cấp acc 1 tháng, hết hạn cấp acc mới đến đủ 1 năm."},{"id":"sp-006","variant":"Cấp sẵn - Team - Cá nhân","accountType":"Nick cấp sẵn dùng riêng","duration":"16 tháng","warranty":"16 tháng","price":"Hết hàng","note":"Nick cấp sẵn dùng riêng, hạn đủ 16 tháng.","description":"Sản phẩm: Capcut Pro. Gói/phiên bản: Cấp sẵn - Team - Cá nhân. Loại tài khoản: Nick cấp sẵn dùng riêng. Thời hạn sử dụng: 16 tháng. Bảo hành: 16 tháng. Ghi chú: Nick cấp sẵn dùng riêng, hạn đủ 16 tháng."},{"id":"sp-007","variant":"Cá nhân","accountType":"Nâng cấp chính chủ","duration":"6 tháng","warranty":"6 tháng","price":"479.000 đ","note":"Khách hàng gửi tài khoản, mật khẩu, log email cho shop nâng; hàng add team chính chủ, renew đủ 6 tháng.","description":"Sản phẩm: Capcut Pro. Gói/phiên bản: Cá nhân. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Khách hàng gửi tài khoản, mật khẩu, log email cho shop nâng; hàng add team chính chủ, renew đủ 6 tháng."},{"id":"sp-008","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"6 tháng","warranty":"6 tháng","price":"Hết hàng","note":"Khách hàng gửi tài khoản, mật khẩu, log email cho shop nâng; hàng add team chính chủ, renew đủ 6 tháng.","description":"Sản phẩm: Capcut Pro. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Khách hàng gửi tài khoản, mật khẩu, log email cho shop nâng; hàng add team chính chủ, renew đủ 6 tháng."}],"priceLabel":"Từ 29.000 đ","durationSummary":"7 ngày / 1 tháng / 3 tháng / 6 tháng / 1 năm...","planCount":8},
+      {"id":"grp-006","name":"MEITU SVIP","brand":"Meitu","category":"Thiết kế - chỉnh sửa ảnh/video","image":"meitu.com","glow":"linear-gradient(135deg,#ff4da6,#fb7185,#f97316)","description":"Sản phẩm: MEITU SVIP. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Shop cấp tài khoản. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Shop cấp tài khoản + mật khẩu.","plans":[{"id":"sp-011","variant":"Cấp sẵn dùng riêng","accountType":"Shop cấp tài khoản","duration":"1 tháng","warranty":"1 tháng","price":"120.000 đ","note":"Shop cấp tài khoản + mật khẩu.","description":"Sản phẩm: MEITU SVIP. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Shop cấp tài khoản. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Shop cấp tài khoản + mật khẩu."},{"id":"sp-012","variant":"Cấp sẵn dùng riêng","accountType":"Shop cấp tài khoản","duration":"1 năm","warranty":"1 tháng","price":"680.000 đ","note":"Shop cấp tài khoản dùng riêng.","description":"Sản phẩm: MEITU SVIP. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Shop cấp tài khoản. Thời hạn sử dụng: 1 năm. Bảo hành: 1 tháng. Ghi chú: Shop cấp tài khoản dùng riêng."}],"priceLabel":"Từ 120.000 đ","durationSummary":"1 tháng / 1 năm","planCount":2},
+      {"id":"grp-005","name":"WINK SVIP","brand":"Wink","category":"Thiết kế - chỉnh sửa ảnh/video","image":"https://wink.ai/","glow":"linear-gradient(135deg,#ff7ac3,#a855f7,#4f46e5)","description":"Sản phẩm: WINK SVIP. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Shop cấp tài khoản. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Shop cấp tài khoản + mật khẩu nick Wink.","plans":[{"id":"sp-009","variant":"Cấp sẵn dùng riêng","accountType":"Shop cấp tài khoản","duration":"1 tháng","warranty":"1 tháng","price":"180.000 đ","note":"Shop cấp tài khoản + mật khẩu nick Wink.","description":"Sản phẩm: WINK SVIP. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Shop cấp tài khoản. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Shop cấp tài khoản + mật khẩu nick Wink."},{"id":"sp-010","variant":"Cấp sẵn dùng riêng","accountType":"Shop cấp tài khoản","duration":"1 năm","warranty":"1 tháng","price":"780.000 đ","note":"Shop cấp tài khoản dùng riêng.","description":"Sản phẩm: WINK SVIP. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Shop cấp tài khoản. Thời hạn sử dụng: 1 năm. Bảo hành: 1 tháng. Ghi chú: Shop cấp tài khoản dùng riêng."}],"priceLabel":"Từ 180.000 đ","durationSummary":"1 tháng / 1 năm","planCount":2},
+      {"id":"grp-024","name":"Blooket 10$","brand":"Blooket","category":"Học tập & khóa học","image":"blooket.com","glow":"linear-gradient(135deg,#8b5cf6,#06b6d4,#0f766e)","description":"Sản phẩm: Blooket 10$. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách; khách hàng cần cung cấp tên đăng nhập và mật khẩu.","plans":[{"id":"sp-039","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"180.000 đ","note":"Nâng cấp chính chủ trên tài khoản khách; khách hàng cần cung cấp tên đăng nhập và mật khẩu.","description":"Sản phẩm: Blooket 10$. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách; khách hàng cần cung cấp tên đăng nhập và mật khẩu."}],"priceLabel":"Từ 180.000 đ","durationSummary":"1 tháng","planCount":1},
+      {"id":"grp-021","name":"Busuu Premium","brand":"Busuu","category":"Học tập & khóa học","image":"busuu.com","glow":"linear-gradient(135deg,#0ea5e9,#6366f1,#4338ca)","description":"Sản phẩm: Busuu Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp, yêu cầu thanh toán trước.","plans":[{"id":"sp-036","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 năm","warranty":"1 năm","price":"370.000 đ","note":"Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp, yêu cầu thanh toán trước.","description":"Sản phẩm: Busuu Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp, yêu cầu thanh toán trước."}],"priceLabel":"Từ 370.000 đ","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-023","name":"Chegg Study Pack","brand":"Chegg","category":"Học tập & khóa học","image":"chegg.com","glow":"linear-gradient(135deg,#f97316,#fb923c,#c2410c)","description":"Sản phẩm: Chegg Study Pack. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp, yêu cầu thanh toán trước.","plans":[{"id":"sp-038","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"260.000 đ","note":"Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp, yêu cầu thanh toán trước.","description":"Sản phẩm: Chegg Study Pack. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp, yêu cầu thanh toán trước."}],"priceLabel":"Từ 260.000 đ","durationSummary":"1 tháng","planCount":1},
+      {"id":"grp-038","name":"Codecademy Pro","brand":"Codecademy","category":"Học tập & khóa học","image":"codecademy.com","glow":"linear-gradient(135deg,#312e81,#6366f1,#0f172a)","description":"Sản phẩm: Codecademy Pro. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 3 tháng. Bảo hành: 3 tháng. Ghi chú: Nâng cấp tài khoản chính chủ.","plans":[{"id":"sp-061","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"3 tháng","warranty":"3 tháng","price":"250.000 đ","note":"Nâng cấp tài khoản chính chủ.","description":"Sản phẩm: Codecademy Pro. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 3 tháng. Bảo hành: 3 tháng. Ghi chú: Nâng cấp tài khoản chính chủ."},{"id":"sp-062","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"6 tháng","warranty":"6 tháng","price":"380.000 đ","note":"Nâng cấp tài khoản chính chủ.","description":"Sản phẩm: Codecademy Pro. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Nâng cấp tài khoản chính chủ."}],"priceLabel":"Từ 250.000 đ","durationSummary":"3 tháng / 6 tháng","planCount":2},
+      {"id":"grp-008","name":"Colanote","brand":"Colanote","category":"Học tập & khóa học","image":"colanote.com","glow":"linear-gradient(135deg,#38bdf8,#a78bfa,#7c3aed)","description":"Sản phẩm: Colanote. Gói/phiên bản: Chính chủ. Loại tài khoản: Acc shop cấp. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Acc shop cấp, không out.","plans":[{"id":"sp-014","variant":"Chính chủ","accountType":"Acc shop cấp","duration":"1 năm","warranty":"1 năm","price":"Hết hàng","note":"Acc shop cấp, không out.","description":"Sản phẩm: Colanote. Gói/phiên bản: Chính chủ. Loại tài khoản: Acc shop cấp. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Acc shop cấp, không out."}],"priceLabel":"Hết hàng","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-041","name":"Coursera Business","brand":"Coursera","category":"Học tập & khóa học","image":"coursera.org","glow":"linear-gradient(135deg,#0056d2,#2563eb,#1e3a8a)","description":"Sản phẩm: Coursera Business. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Có thể nhận chứng chỉ mang tên mình sau khi tốt nghiệp. Khách hàng vui lòng không thay đổi email của tài khoản; đổi password vẫn được, được đổi thông tin để nhận chứng chỉ tên bạn.","plans":[{"id":"sp-067","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản cấp sẵn","duration":"1 tháng","warranty":"1 tháng","price":"180.000 đ","note":"Có thể nhận chứng chỉ mang tên mình sau khi tốt nghiệp. Khách hàng vui lòng không thay đổi email của tài khoản; đổi password vẫn được, được đổi thông tin để nhận chứng chỉ tên bạn.","description":"Sản phẩm: Coursera Business. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Có thể nhận chứng chỉ mang tên mình sau khi tốt nghiệp. Khách hàng vui lòng không thay đổi email của tài khoản; đổi password vẫn được, được đổi thông tin để nhận chứng chỉ tên bạn."},{"id":"sp-068","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản cấp sẵn","duration":"6 tháng","warranty":"6 tháng","price":"580.000 đ","note":"Có thể nhận chứng chỉ mang tên mình sau khi tốt nghiệp.","description":"Sản phẩm: Coursera Business. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Có thể nhận chứng chỉ mang tên mình sau khi tốt nghiệp."},{"id":"sp-069","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản cấp sẵn","duration":"1 năm","warranty":"1 năm","price":"880.000 đ","note":"Có thể nhận chứng chỉ mang tên mình sau khi tốt nghiệp.","description":"Sản phẩm: Coursera Business. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Có thể nhận chứng chỉ mang tên mình sau khi tốt nghiệp."}],"priceLabel":"Từ 180.000 đ","durationSummary":"1 tháng / 6 tháng / 1 năm","planCount":3},
+      {"id":"grp-040","name":"Datacamp Premium","brand":"DataCamp","category":"Học tập & khóa học","image":"datacamp.com","glow":"linear-gradient(135deg,#14b8a6,#22d3ee,#0e7490)","description":"Sản phẩm: Datacamp Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp chính chủ, chỉ cần cung cấp email Datacamp. Bảo hành fulltime, không nhận login qua Google.","plans":[{"id":"sp-064","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 năm","warranty":"1 năm","price":"500.000 đ","note":"Nâng cấp chính chủ, chỉ cần cung cấp email Datacamp. Bảo hành fulltime, không nhận login qua Google.","description":"Sản phẩm: Datacamp Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp chính chủ, chỉ cần cung cấp email Datacamp. Bảo hành fulltime, không nhận login qua Google."},{"id":"sp-065","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"6 tháng","warranty":"6 tháng","price":"350.000 đ","note":"Nâng cấp chính chủ, chỉ cần cung cấp email Datacamp.","description":"Sản phẩm: Datacamp Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Nâng cấp chính chủ, chỉ cần cung cấp email Datacamp."},{"id":"sp-066","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"3 tháng","warranty":"3 tháng","price":"230.000 đ","note":"Nâng cấp chính chủ, chỉ cần cung cấp email Datacamp.","description":"Sản phẩm: Datacamp Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 3 tháng. Bảo hành: 3 tháng. Ghi chú: Nâng cấp chính chủ, chỉ cần cung cấp email Datacamp."}],"priceLabel":"Từ 230.000 đ","durationSummary":"1 năm / 6 tháng / 3 tháng","planCount":3},
+      {"id":"grp-010","name":"Duolingo Slot Max Add Fam","brand":"Duolingo","category":"Học tập & khóa học","image":"duolingo.com","glow":"linear-gradient(135deg,#58cc02,#84cc16,#166534)","description":"Sản phẩm: Duolingo Slot Max Add Fam. Gói/phiên bản: Add Family. Loại tài khoản: Chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp chính chủ, cần cấp pass.","plans":[{"id":"sp-016","variant":"Add Family","accountType":"Chính chủ","duration":"1 năm","warranty":"1 năm","price":"550.000 đ","note":"Nâng cấp chính chủ, cần cấp pass.","description":"Sản phẩm: Duolingo Slot Max Add Fam. Gói/phiên bản: Add Family. Loại tài khoản: Chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp chính chủ, cần cấp pass."}],"priceLabel":"Từ 550.000 đ","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-009","name":"Duolingo Slot Super Add Fam","brand":"Duolingo","category":"Học tập & khóa học","image":"duolingo.com","glow":"linear-gradient(135deg,#58cc02,#84cc16,#166534)","description":"Sản phẩm: Duolingo Slot Super Add Fam. Gói/phiên bản: Add Family. Loại tài khoản: Chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ, cần cấp pass.","plans":[{"id":"sp-015","variant":"Add Family","accountType":"Chính chủ","duration":"1 năm","warranty":"1 tháng","price":"220.000 đ","note":"Nâng cấp chính chủ, cần cấp pass.","description":"Sản phẩm: Duolingo Slot Super Add Fam. Gói/phiên bản: Add Family. Loại tài khoản: Chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ, cần cấp pass."}],"priceLabel":"Từ 220.000 đ","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-017","name":"Ejoy English Pro Plus","brand":"Ejoy","category":"Học tập & khóa học","image":"ejoy-english.com","glow":"linear-gradient(135deg,#f97316,#facc15,#ca8a04)","description":"Sản phẩm: Ejoy English Pro Plus. Gói/phiên bản: Dùng chung. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Tài khoản cấp sẵn, dùng trên 1 thiết bị. Mỗi khách hàng tạo 1 thẻ từ vựng riêng, yêu cầu thanh toán trước.","plans":[{"id":"sp-030","variant":"Dùng chung","accountType":"Tài khoản cấp sẵn","duration":"1 năm","warranty":"1 năm","price":"359.000 đ","note":"Tài khoản cấp sẵn, dùng trên 1 thiết bị. Mỗi khách hàng tạo 1 thẻ từ vựng riêng, yêu cầu thanh toán trước.","description":"Sản phẩm: Ejoy English Pro Plus. Gói/phiên bản: Dùng chung. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Tài khoản cấp sẵn, dùng trên 1 thiết bị. Mỗi khách hàng tạo 1 thẻ từ vựng riêng, yêu cầu thanh toán trước."},{"id":"sp-031","variant":"Dùng chung","accountType":"Tài khoản cấp sẵn","duration":"Vĩnh viễn","warranty":"1 năm","price":"499.000 đ","note":"Tài khoản cấp sẵn, dùng chung.","description":"Sản phẩm: Ejoy English Pro Plus. Gói/phiên bản: Dùng chung. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: Vĩnh viễn. Bảo hành: 1 năm. Ghi chú: Tài khoản cấp sẵn, dùng chung."}],"priceLabel":"Từ 359.000 đ","durationSummary":"1 năm / Vĩnh viễn","planCount":2},
+      {"id":"grp-012","name":"Elsa Premium","brand":"ELSA","category":"Học tập & khóa học","image":"elsaspeak.com","glow":"linear-gradient(135deg,#22d3ee,#0ea5e9,#1d4ed8)","description":"Sản phẩm: Elsa Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp chính chủ, cần cấp pass. Lưu ý: sử dụng tối đa 2 thiết bị.","plans":[{"id":"sp-018","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 năm","warranty":"1 năm","price":"850.000 đ","note":"Nâng cấp chính chủ, cần cấp pass. Lưu ý: sử dụng tối đa 2 thiết bị.","description":"Sản phẩm: Elsa Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp chính chủ, cần cấp pass. Lưu ý: sử dụng tối đa 2 thiết bị."},{"id":"sp-019","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"3 tháng","warranty":"3 tháng","price":"550.000 đ","note":"Nâng cấp chính chủ, cần cấp pass.","description":"Sản phẩm: Elsa Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 3 tháng. Bảo hành: 3 tháng. Ghi chú: Nâng cấp chính chủ, cần cấp pass."}],"priceLabel":"Từ 550.000 đ","durationSummary":"1 năm / 3 tháng","planCount":2},
+      {"id":"grp-013","name":"Elsa Pro","brand":"ELSA","category":"Học tập & khóa học","image":"elsaspeak.com","glow":"linear-gradient(135deg,#22d3ee,#0ea5e9,#1d4ed8)","description":"Sản phẩm: Elsa Pro. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp chính chủ, cần cấp pass.","plans":[{"id":"sp-020","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 năm","warranty":"1 năm","price":"350.000 đ","note":"Nâng cấp chính chủ, cần cấp pass.","description":"Sản phẩm: Elsa Pro. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp chính chủ, cần cấp pass."}],"priceLabel":"Từ 350.000 đ","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-011","name":"Family Duolingo (FAM)","brand":"Duolingo","category":"Học tập & khóa học","image":"duolingo.com","glow":"linear-gradient(135deg,#58cc02,#84cc16,#166534)","description":"Sản phẩm: Family Duolingo (FAM). Gói/phiên bản: Chính chủ - Acc cấp. Loại tài khoản: Family. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp chính chủ, cần cấp pass.","plans":[{"id":"sp-017","variant":"Chính chủ - Acc cấp","accountType":"Family","duration":"1 năm","warranty":"1 năm","price":"800.000 đ","note":"Nâng cấp chính chủ, cần cấp pass.","description":"Sản phẩm: Family Duolingo (FAM). Gói/phiên bản: Chính chủ - Acc cấp. Loại tài khoản: Family. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp chính chủ, cần cấp pass."}],"priceLabel":"Từ 800.000 đ","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-007","name":"Goodnotes","brand":"Goodnotes","category":"Học tập & khóa học","image":"goodnotes.com","glow":"linear-gradient(135deg,#3b82f6,#22d3ee,#0f766e)","description":"Sản phẩm: Goodnote. Gói/phiên bản: Chính chủ. Loại tài khoản: Acc shop cấp. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Acc shop cấp, không out.","plans":[{"id":"sp-013","variant":"Chính chủ","accountType":"Acc shop cấp","duration":"1 năm","warranty":"1 năm","price":"Hết hàng","note":"Acc shop cấp, không out.","description":"Sản phẩm: Goodnote. Gói/phiên bản: Chính chủ. Loại tài khoản: Acc shop cấp. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Acc shop cấp, không out."}],"priceLabel":"Hết hàng","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-016","name":"Grammarly Có AI","brand":"Grammarly","category":"Học tập & khóa học","image":"grammarly.com","glow":"linear-gradient(135deg,#15c39a,#22c55e,#065f46)","description":"Sản phẩm: Grammarly Có AI. Gói/phiên bản: Dùng chung. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Tài khoản cấp sẵn, dùng 1 thiết bị, không đổi thông tin.","plans":[{"id":"sp-029","variant":"Dùng chung","accountType":"Tài khoản cấp sẵn","duration":"1 năm","warranty":"1 năm","price":"280.000 đ","note":"Tài khoản cấp sẵn, dùng 1 thiết bị, không đổi thông tin.","description":"Sản phẩm: Grammarly Có AI. Gói/phiên bản: Dùng chung. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Tài khoản cấp sẵn, dùng 1 thiết bị, không đổi thông tin."}],"priceLabel":"Từ 280.000 đ","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-014","name":"Grammarly EDU Có AI","brand":"Grammarly","category":"Học tập & khóa học","image":"grammarly.com","glow":"linear-gradient(135deg,#15c39a,#22c55e,#065f46)","description":"Sản phẩm: Grammarly EDU Có AI. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản dùng riêng. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Tài khoản dùng riêng, đổi pass tùy ý, dùng trên 1 thiết bị. Gồm tên đăng nhập và link đặt mật khẩu để khách tự set password.","plans":[{"id":"sp-021","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản dùng riêng","duration":"1 tháng","warranty":"1 tháng","price":"220.000 đ","note":"Tài khoản dùng riêng, đổi pass tùy ý, dùng trên 1 thiết bị. Gồm tên đăng nhập và link đặt mật khẩu để khách tự set password.","description":"Sản phẩm: Grammarly EDU Có AI. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản dùng riêng. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Tài khoản dùng riêng, đổi pass tùy ý, dùng trên 1 thiết bị. Gồm tên đăng nhập và link đặt mật khẩu để khách tự set password."},{"id":"sp-022","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản dùng riêng","duration":"3 tháng","warranty":"3 tháng","price":"290.000 đ","note":"Tài khoản dùng riêng, đổi pass tùy ý.","description":"Sản phẩm: Grammarly EDU Có AI. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản dùng riêng. Thời hạn sử dụng: 3 tháng. Bảo hành: 3 tháng. Ghi chú: Tài khoản dùng riêng, đổi pass tùy ý."},{"id":"sp-023","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản dùng riêng","duration":"6 tháng","warranty":"6 tháng","price":"450.000 đ","note":"Tài khoản dùng riêng, đổi pass tùy ý.","description":"Sản phẩm: Grammarly EDU Có AI. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản dùng riêng. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Tài khoản dùng riêng, đổi pass tùy ý."},{"id":"sp-024","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản dùng riêng","duration":"1 năm","warranty":"1 năm","price":"600.000 đ","note":"Tài khoản dùng riêng, đổi pass tùy ý.","description":"Sản phẩm: Grammarly EDU Có AI. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản dùng riêng. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Tài khoản dùng riêng, đổi pass tùy ý."}],"priceLabel":"Từ 220.000 đ","durationSummary":"1 tháng / 3 tháng / 6 tháng / 1 năm","planCount":4},
+      {"id":"grp-015","name":"Grammarly EDU Không có AI","brand":"Grammarly","category":"Học tập & khóa học","image":"grammarly.com","glow":"linear-gradient(135deg,#15c39a,#22c55e,#065f46)","description":"Sản phẩm: Grammarly EDU Không có AI. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản dùng riêng. Thời hạn sử dụng: 1 tháng. Bảo hành: 3 tháng. Ghi chú: Tài khoản cấp sẵn, dùng riêng.","plans":[{"id":"sp-025","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản dùng riêng","duration":"1 tháng","warranty":"3 tháng","price":"190.000 đ","note":"Tài khoản cấp sẵn, dùng riêng.","description":"Sản phẩm: Grammarly EDU Không có AI. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản dùng riêng. Thời hạn sử dụng: 1 tháng. Bảo hành: 3 tháng. Ghi chú: Tài khoản cấp sẵn, dùng riêng."},{"id":"sp-026","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản dùng riêng","duration":"3 tháng","warranty":"3 tháng","price":"250.000 đ","note":"Tài khoản cấp sẵn, dùng riêng.","description":"Sản phẩm: Grammarly EDU Không có AI. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản dùng riêng. Thời hạn sử dụng: 3 tháng. Bảo hành: 3 tháng. Ghi chú: Tài khoản cấp sẵn, dùng riêng."},{"id":"sp-027","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản dùng riêng","duration":"6 tháng","warranty":"6 tháng","price":"350.000 đ","note":"Tài khoản cấp sẵn, dùng riêng.","description":"Sản phẩm: Grammarly EDU Không có AI. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản dùng riêng. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Tài khoản cấp sẵn, dùng riêng."},{"id":"sp-028","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản dùng riêng","duration":"1 năm","warranty":"1 năm","price":"500.000 đ","note":"Tài khoản cấp sẵn, dùng riêng.","description":"Sản phẩm: Grammarly EDU Không có AI. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản dùng riêng. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Tài khoản cấp sẵn, dùng riêng."}],"priceLabel":"Từ 190.000 đ","durationSummary":"1 tháng / 3 tháng / 6 tháng / 1 năm","planCount":4},
+      {"id":"grp-033","name":"Hellochinese Premium","brand":"HelloChinese","category":"Học tập & khóa học","image":"hellochinese.cc","glow":"linear-gradient(135deg,#ef4444,#facc15,#ca8a04)","description":"Sản phẩm: Hellochinese Premium. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 năm. Bảo hành: 1 tháng. Ghi chú: Tài khoản cấp sẵn, có thể đổi pass, dùng được cho 2 thiết bị; yêu cầu khách hàng thanh toán trước.","plans":[{"id":"sp-053","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản cấp sẵn","duration":"1 năm","warranty":"1 tháng","price":"Hết hàng","note":"Tài khoản cấp sẵn, có thể đổi pass, dùng được cho 2 thiết bị; yêu cầu khách hàng thanh toán trước.","description":"Sản phẩm: Hellochinese Premium. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 năm. Bảo hành: 1 tháng. Ghi chú: Tài khoản cấp sẵn, có thể đổi pass, dùng được cho 2 thiết bị; yêu cầu khách hàng thanh toán trước."},{"id":"sp-056","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 năm","warranty":"1 năm","price":"Hết hàng","note":"Nâng cấp chính chủ, khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp.","description":"Sản phẩm: Hellochinese Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp chính chủ, khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp."}],"priceLabel":"Hết hàng","durationSummary":"1 năm","planCount":2},
+      {"id":"grp-034","name":"Hellochinese Premium Plus","brand":"HelloChinese","category":"Học tập & khóa học","image":"hellochinese.cc","glow":"linear-gradient(135deg,#ef4444,#facc15,#ca8a04)","description":"Sản phẩm: Hellochinese Premium Plus. Gói/phiên bản: Premium +. Loại tài khoản: Cấp sẵn dùng riêng. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Tài khoản cấp sẵn dùng riêng.","plans":[{"id":"sp-054","variant":"Premium +","accountType":"Cấp sẵn dùng riêng","duration":"6 tháng","warranty":"6 tháng","price":"Hết hàng","note":"Tài khoản cấp sẵn dùng riêng.","description":"Sản phẩm: Hellochinese Premium Plus. Gói/phiên bản: Premium +. Loại tài khoản: Cấp sẵn dùng riêng. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Tài khoản cấp sẵn dùng riêng."},{"id":"sp-055","variant":"Premium +","accountType":"Cấp sẵn dùng riêng","duration":"1 năm","warranty":"1 năm","price":"Hết hàng","note":"Tài khoản cấp sẵn dùng riêng.","description":"Sản phẩm: Hellochinese Premium Plus. Gói/phiên bản: Premium +. Loại tài khoản: Cấp sẵn dùng riêng. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Tài khoản cấp sẵn dùng riêng."}],"priceLabel":"Hết hàng","durationSummary":"6 tháng / 1 năm","planCount":2},
+      {"id":"grp-026","name":"Kahoot 100 người (Silver)","brand":"Kahoot","category":"Học tập & khóa học","image":"kahoot.com","glow":"linear-gradient(135deg,#6d28d9,#ec4899,#f97316)","description":"Sản phẩm: Kahoot 100 người (Silver). Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách.","plans":[{"id":"sp-041","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"170.000 đ","note":"Nâng cấp chính chủ trên tài khoản khách.","description":"Sản phẩm: Kahoot 100 người (Silver). Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách."}],"priceLabel":"Từ 170.000 đ","durationSummary":"1 tháng","planCount":1},
+      {"id":"grp-027","name":"Kahoot 200 người (Gold)","brand":"Kahoot","category":"Học tập & khóa học","image":"kahoot.com","glow":"linear-gradient(135deg,#6d28d9,#ec4899,#f97316)","description":"Sản phẩm: Kahoot 200 người (Gold). Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách.","plans":[{"id":"sp-042","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"220.000 đ","note":"Nâng cấp chính chủ trên tài khoản khách.","description":"Sản phẩm: Kahoot 200 người (Gold). Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách."}],"priceLabel":"Từ 220.000 đ","durationSummary":"1 tháng","planCount":1},
+      {"id":"grp-028","name":"Kahoot 400 người (One)","brand":"Kahoot","category":"Học tập & khóa học","image":"kahoot.com","glow":"linear-gradient(135deg,#6d28d9,#ec4899,#f97316)","description":"Sản phẩm: Kahoot 400 người (One). Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách.","plans":[{"id":"sp-043","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"300.000 đ","note":"Nâng cấp chính chủ trên tài khoản khách.","description":"Sản phẩm: Kahoot 400 người (One). Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách."}],"priceLabel":"Từ 300.000 đ","durationSummary":"1 tháng","planCount":1},
+      {"id":"grp-025","name":"Kahoot 50 người (Bronze)","brand":"Kahoot","category":"Học tập & khóa học","image":"kahoot.com","glow":"linear-gradient(135deg,#6d28d9,#ec4899,#f97316)","description":"Sản phẩm: Kahoot 50 người (Bronze). Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách; cần cung cấp tên đăng nhập và mật khẩu. Không nhận login qua Google.","plans":[{"id":"sp-040","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"120.000 đ","note":"Nâng cấp chính chủ trên tài khoản khách; cần cung cấp tên đăng nhập và mật khẩu. Không nhận login qua Google.","description":"Sản phẩm: Kahoot 50 người (Bronze). Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách; cần cung cấp tên đăng nhập và mật khẩu. Không nhận login qua Google."}],"priceLabel":"Từ 120.000 đ","durationSummary":"1 tháng","planCount":1},
+      {"id":"grp-037","name":"Lingokids Fam","brand":"Lingokids","category":"Học tập & khóa học","image":"lingokids.com","glow":"linear-gradient(135deg,#22d3ee,#a3e635,#15803d)","description":"Sản phẩm: Lingokids Fam. Gói/phiên bản: Add được 5 slot. Loại tài khoản: Chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp family, không phải acc cá nhân. Vui lòng cung cấp tên đăng nhập và mật khẩu để nâng cấp.","plans":[{"id":"sp-060","variant":"Add được 5 slot","accountType":"Chính chủ","duration":"1 năm","warranty":"1 năm","price":"450.000 đ","note":"Nâng cấp family, không phải acc cá nhân. Vui lòng cung cấp tên đăng nhập và mật khẩu để nâng cấp.","description":"Sản phẩm: Lingokids Fam. Gói/phiên bản: Add được 5 slot. Loại tài khoản: Chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp family, không phải acc cá nhân. Vui lòng cung cấp tên đăng nhập và mật khẩu để nâng cấp."}],"priceLabel":"Từ 450.000 đ","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-019","name":"Memrise Lifetime","brand":"Memrise","category":"Học tập & khóa học","image":"memrise.com","glow":"linear-gradient(135deg,#f59e0b,#ef4444,#7f1d1d)","description":"Sản phẩm: Memrise Lifetime. Gói/phiên bản: Bảo hành 1 năm. Loại tài khoản: Cấp sẵn dùng riêng. Thời hạn sử dụng: Vĩnh viễn. Bảo hành: 1 năm. Ghi chú: Acc cấp sẵn, dùng riêng. Có thể gửi địa chỉ mail để shop tạo acc; acc mới chưa tạo, acc cũ không được.","plans":[{"id":"sp-034","variant":"Bảo hành 1 năm","accountType":"Cấp sẵn dùng riêng","duration":"Vĩnh viễn","warranty":"1 năm","price":"600.000 đ","note":"Acc cấp sẵn, dùng riêng. Có thể gửi địa chỉ mail để shop tạo acc; acc mới chưa tạo, acc cũ không được.","description":"Sản phẩm: Memrise Lifetime. Gói/phiên bản: Bảo hành 1 năm. Loại tài khoản: Cấp sẵn dùng riêng. Thời hạn sử dụng: Vĩnh viễn. Bảo hành: 1 năm. Ghi chú: Acc cấp sẵn, dùng riêng. Có thể gửi địa chỉ mail để shop tạo acc; acc mới chưa tạo, acc cũ không được."}],"priceLabel":"Từ 600.000 đ","durationSummary":"Vĩnh viễn","planCount":1},
+      {"id":"grp-043","name":"Notion Business Có AI","brand":"Notion","category":"Học tập & khóa học","image":"notion.so","glow":"linear-gradient(135deg,#ffffff,#cbd5e1,#475569)","description":"Sản phẩm: Notion Business Có AI. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp qua workspace. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Bạn cần cung cấp email tài khoản Notion để shop nâng cấp. Nhận lời mời tham gia Workspace của shop và sử dụng tính năng Business/AI trong Workspace. Không bảo hành dữ liệu lưu trên Team Workspace.","plans":[{"id":"sp-071","variant":"Chính chủ","accountType":"Nâng cấp qua workspace","duration":"1 tháng","warranty":"1 tháng","price":"120.000 đ","note":"Bạn cần cung cấp email tài khoản Notion để shop nâng cấp. Nhận lời mời tham gia Workspace của shop và sử dụng tính năng Business/AI trong Workspace. Không bảo hành dữ liệu lưu trên Team Workspace.","description":"Sản phẩm: Notion Business Có AI. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp qua workspace. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Bạn cần cung cấp email tài khoản Notion để shop nâng cấp. Nhận lời mời tham gia Workspace của shop và sử dụng tính năng Business/AI trong Workspace. Không bảo hành dữ liệu lưu trên Team Workspace."},{"id":"sp-072","variant":"Chính chủ","accountType":"Nâng cấp qua workspace","duration":"6 tháng","warranty":"6 tháng","price":"380.000 đ","note":"Bạn cần cung cấp email tài khoản Notion để shop nâng cấp.","description":"Sản phẩm: Notion Business Có AI. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp qua workspace. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Bạn cần cung cấp email tài khoản Notion để shop nâng cấp."}],"priceLabel":"Từ 120.000 đ","durationSummary":"1 tháng / 6 tháng","planCount":2},
+      {"id":"grp-042","name":"Notion Edu","brand":"Notion","category":"Học tập & khóa học","image":"notion.so","glow":"linear-gradient(135deg,#ffffff,#cbd5e1,#475569)","description":"Sản phẩm: Notion Edu. Gói/phiên bản: Cấp sẵn - không nhận chính chủ. Loại tài khoản: Cấp sẵn dùng riêng. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Tài khoản cấp sẵn, dùng riêng.","plans":[{"id":"sp-070","variant":"Cấp sẵn - không nhận chính chủ","accountType":"Cấp sẵn dùng riêng","duration":"1 năm","warranty":"1 năm","price":"250.000 đ","note":"Tài khoản cấp sẵn, dùng riêng.","description":"Sản phẩm: Notion Edu. Gói/phiên bản: Cấp sẵn - không nhận chính chủ. Loại tài khoản: Cấp sẵn dùng riêng. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Tài khoản cấp sẵn, dùng riêng."}],"priceLabel":"Từ 250.000 đ","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-018","name":"Quillbot Premium","brand":"QuillBot","category":"Học tập & khóa học","image":"quillbot.com","glow":"linear-gradient(135deg,#22c55e,#14b8a6,#0f766e)","description":"Sản phẩm: Quillbot Premium. Gói/phiên bản: Dùng chung. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Acc cấp sẵn, không đổi thông tin account.","plans":[{"id":"sp-032","variant":"Dùng chung","accountType":"Tài khoản cấp sẵn","duration":"1 tháng","warranty":"1 tháng","price":"165.000 đ","note":"Acc cấp sẵn, không đổi thông tin account.","description":"Sản phẩm: Quillbot Premium. Gói/phiên bản: Dùng chung. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Acc cấp sẵn, không đổi thông tin account."},{"id":"sp-033","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản dùng riêng","duration":"1 năm","warranty":"1 năm","price":"650.000 đ","note":"Tài khoản cấp sẵn dùng riêng.","description":"Sản phẩm: Quillbot Premium. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản dùng riêng. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Tài khoản cấp sẵn dùng riêng."}],"priceLabel":"Từ 165.000 đ","durationSummary":"1 tháng / 1 năm","planCount":2},
+      {"id":"grp-035","name":"Quizlet Plus","brand":"Quizlet","category":"Học tập & khóa học","image":"quizlet.com","glow":"linear-gradient(135deg,#4257b2,#6366f1,#312e81)","description":"Sản phẩm: Quizlet Plus. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản tạo sẵn. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Tài khoản tạo sẵn, chỉ dùng được 1 tháng; hết 1 tháng đổi tài khoản khác hoặc nâng cấp lên 1 năm.","plans":[{"id":"sp-057","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản tạo sẵn","duration":"1 tháng","warranty":"1 tháng","price":"50.000 đ","note":"Tài khoản tạo sẵn, chỉ dùng được 1 tháng; hết 1 tháng đổi tài khoản khác hoặc nâng cấp lên 1 năm.","description":"Sản phẩm: Quizlet Plus. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản tạo sẵn. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Tài khoản tạo sẵn, chỉ dùng được 1 tháng; hết 1 tháng đổi tài khoản khác hoặc nâng cấp lên 1 năm."},{"id":"sp-058","variant":"Chính chủ","accountType":"Teacher - Student","duration":"1 năm","warranty":"1 năm","price":"150.000 đ","note":"Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp.","description":"Sản phẩm: Quizlet Plus. Gói/phiên bản: Chính chủ. Loại tài khoản: Teacher - Student. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp."}],"priceLabel":"Từ 50.000 đ","durationSummary":"1 tháng / 1 năm","planCount":2},
+      {"id":"grp-036","name":"Quizlet Plus Unlimited","brand":"Quizlet","category":"Học tập & khóa học","image":"quizlet.com","glow":"linear-gradient(135deg,#4257b2,#6366f1,#312e81)","description":"Sản phẩm: Quizlet Plus Unlimited. Gói/phiên bản: Chính chủ. Loại tài khoản: Teacher - Student. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp.","plans":[{"id":"sp-059","variant":"Chính chủ","accountType":"Teacher - Student","duration":"1 năm","warranty":"1 năm","price":"180.000 đ","note":"Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp.","description":"Sản phẩm: Quizlet Plus Unlimited. Gói/phiên bản: Chính chủ. Loại tài khoản: Teacher - Student. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp."}],"priceLabel":"Từ 180.000 đ","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-020","name":"Scribd Premium","brand":"Scribd","category":"Học tập & khóa học","image":"scribd.com","glow":"linear-gradient(135deg,#1f2937,#64748b,#111827)","description":"Sản phẩm: Scribd Premium. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản dùng riêng. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Tài khoản cấp sẵn, dùng riêng tư.","plans":[{"id":"sp-035","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản dùng riêng","duration":"1 tháng","warranty":"1 tháng","price":"60.000 đ","note":"Tài khoản cấp sẵn, dùng riêng tư.","description":"Sản phẩm: Scribd Premium. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản dùng riêng. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Tài khoản cấp sẵn, dùng riêng tư."}],"priceLabel":"Từ 60.000 đ","durationSummary":"1 tháng","planCount":1},
+      {"id":"grp-032","name":"SketchUP Edu","brand":"SketchUp","category":"Học tập & khóa học","image":"sketchup.com","glow":"linear-gradient(135deg,#ef4444,#f97316,#7f1d1d)","description":"Sản phẩm: SketchUP Edu. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Tài khoản này chỉ dùng được phiên bản website, tài khoản cấp sẵn, dùng riêng. Không dùng được cho app.","plans":[{"id":"sp-052","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản cấp sẵn","duration":"1 năm","warranty":"1 năm","price":"350.000 đ","note":"Tài khoản này chỉ dùng được phiên bản website, tài khoản cấp sẵn, dùng riêng. Không dùng được cho app.","description":"Sản phẩm: SketchUP Edu. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Tài khoản này chỉ dùng được phiên bản website, tài khoản cấp sẵn, dùng riêng. Không dùng được cho app."}],"priceLabel":"Từ 350.000 đ","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-031","name":"Skillshare Premium","brand":"Skillshare","category":"Học tập & khóa học","image":"skillshare.com","glow":"linear-gradient(135deg,#22c55e,#84cc16,#166534)","description":"Sản phẩm: Skillshare Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp.","plans":[{"id":"sp-048","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"100.000 đ","note":"Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp.","description":"Sản phẩm: Skillshare Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp."},{"id":"sp-049","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"3 tháng","warranty":"3 tháng","price":"200.000 đ","note":"Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp.","description":"Sản phẩm: Skillshare Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 3 tháng. Bảo hành: 3 tháng. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp."},{"id":"sp-050","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"6 tháng","warranty":"6 tháng","price":"350.000 đ","note":"Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp.","description":"Sản phẩm: Skillshare Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp."},{"id":"sp-051","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 năm","warranty":"1 năm","price":"600.000 đ","note":"Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp.","description":"Sản phẩm: Skillshare Premium. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp."}],"priceLabel":"Từ 100.000 đ","durationSummary":"1 tháng / 3 tháng / 6 tháng / 1 năm","planCount":4},
+      {"id":"grp-039","name":"Studocu Premium","brand":"Studocu","category":"Học tập & khóa học","image":"studocu.com","glow":"linear-gradient(135deg,#14b8a6,#22c55e,#166534)","description":"Sản phẩm: Studocu Premium. Gói/phiên bản: Dùng chung. Loại tài khoản: Acc sẵn. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Acc sẵn, không đổi mật khẩu.","plans":[{"id":"sp-063","variant":"Dùng chung","accountType":"Acc sẵn","duration":"1 năm","warranty":"1 năm","price":"Hết hàng","note":"Acc sẵn, không đổi mật khẩu.","description":"Sản phẩm: Studocu Premium. Gói/phiên bản: Dùng chung. Loại tài khoản: Acc sẵn. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Acc sẵn, không đổi mật khẩu."}],"priceLabel":"Hết hàng","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-044","name":"Turnitin Student","brand":"Turnitin","category":"Học tập & khóa học","image":"turnitin.com","glow":"linear-gradient(135deg,#ef4444,#f97316,#7f1d1d)","description":"Sản phẩm: Turnitin Student. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp mail chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp mail chính chủ, không cần pass nếu chưa tạo; nếu tạo rồi thì gửi full email và pass Turnitin. Không có check AI, tối đa 30 lượt check mỗi ngày.","plans":[{"id":"sp-073","variant":"Chính chủ","accountType":"Nâng cấp mail chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"Hết hàng","note":"Nâng cấp mail chính chủ, không cần pass nếu chưa tạo; nếu tạo rồi thì gửi full email và pass Turnitin. Không có check AI, tối đa 30 lượt check mỗi ngày.","description":"Sản phẩm: Turnitin Student. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp mail chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp mail chính chủ, không cần pass nếu chưa tạo; nếu tạo rồi thì gửi full email và pass Turnitin. Không có check AI, tối đa 30 lượt check mỗi ngày."},{"id":"sp-074","variant":"Chính chủ","accountType":"Nâng cấp mail chính chủ","duration":"3 tháng","warranty":"3 tháng","price":"Hết hàng","note":"Không có check AI, tối đa 30 lượt check mỗi ngày.","description":"Sản phẩm: Turnitin Student. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp mail chính chủ. Thời hạn sử dụng: 3 tháng. Bảo hành: 3 tháng. Ghi chú: Không có check AI, tối đa 30 lượt check mỗi ngày."},{"id":"sp-075","variant":"Chính chủ","accountType":"Nâng cấp mail chính chủ","duration":"6 tháng","warranty":"6 tháng","price":"Hết hàng","note":"Không có check AI, tối đa 30 lượt check mỗi ngày.","description":"Sản phẩm: Turnitin Student. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp mail chính chủ. Thời hạn sử dụng: 6 tháng. Bảo hành: 6 tháng. Ghi chú: Không có check AI, tối đa 30 lượt check mỗi ngày."},{"id":"sp-076","variant":"Chính chủ","accountType":"Nâng cấp mail chính chủ","duration":"1 năm","warranty":"1 năm","price":"Hết hàng","note":"Không có check AI, tối đa 30 lượt check mỗi ngày.","description":"Sản phẩm: Turnitin Student. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp mail chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Không có check AI, tối đa 30 lượt check mỗi ngày."}],"priceLabel":"Hết hàng","durationSummary":"1 tháng / 3 tháng / 6 tháng / 1 năm","planCount":4},
+      {"id":"grp-022","name":"Twinkl","brand":"Twinkl","category":"Học tập & khóa học","image":"twinkl.com","glow":"linear-gradient(135deg,#ff7ac3,#a855f7,#4f46e5)","description":"Sản phẩm: Twinkl. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp, yêu cầu thanh toán trước.","plans":[{"id":"sp-037","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 năm","warranty":"1 năm","price":"Hết hàng","note":"Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp, yêu cầu thanh toán trước.","description":"Sản phẩm: Twinkl. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Khách hàng cần cung cấp tên đăng nhập và mật khẩu để nâng cấp, yêu cầu thanh toán trước."}],"priceLabel":"Hết hàng","durationSummary":"1 năm","planCount":1},
+      {"id":"grp-045","name":"Tải khóa học trên Udemy","brand":"Udemy","category":"Học tập & khóa học","image":"udemy.com","glow":"linear-gradient(135deg,#a435f0,#d946ef,#7e22ce)","description":"Sản phẩm: Tải khóa học trên Udemy. Gói/phiên bản: 1 khóa học. Loại tài khoản: Gửi link khóa học + Gmail. Thời hạn sử dụng: 1 khóa học. Bảo hành: 1 khóa học. Ghi chú: Cần link khóa học + Gmail; khóa học gửi về mail dưới dạng Drive sau khoảng 2-4 tiếng.","plans":[{"id":"sp-077","variant":"1 khóa học","accountType":"Gửi link khóa học + Gmail","duration":"1 khóa học","warranty":"1 khóa học","price":"100.000 đ","note":"Cần link khóa học + Gmail; khóa học gửi về mail dưới dạng Drive sau khoảng 2-4 tiếng.","description":"Sản phẩm: Tải khóa học trên Udemy. Gói/phiên bản: 1 khóa học. Loại tài khoản: Gửi link khóa học + Gmail. Thời hạn sử dụng: 1 khóa học. Bảo hành: 1 khóa học. Ghi chú: Cần link khóa học + Gmail; khóa học gửi về mail dưới dạng Drive sau khoảng 2-4 tiếng."}],"priceLabel":"Từ 100.000 đ","durationSummary":"1 khóa học","planCount":1},
+      {"id":"grp-046","name":"Udemy Personal Plan","brand":"Udemy","category":"Học tập & khóa học","image":"udemy.com","glow":"linear-gradient(135deg,#a435f0,#d946ef,#7e22ce)","description":"Sản phẩm: Udemy Personal Plan. Gói/phiên bản: Dùng riêng. Loại tài khoản: Acc cấp sẵn. Thời hạn sử dụng: 1 tháng. Bảo hành: Bảo hành full. Ghi chú: Hình thức nâng cấp: acc cấp sẵn, dùng riêng. Có tỷ lệ lỗi; lỗi thì đổi acc luôn, không bảo hành trên acc cũ.","plans":[{"id":"sp-078","variant":"Dùng riêng","accountType":"Acc cấp sẵn","duration":"1 tháng","warranty":"Bảo hành full","price":"Hết hàng","note":"Hình thức nâng cấp: acc cấp sẵn, dùng riêng. Có tỷ lệ lỗi; lỗi thì đổi acc luôn, không bảo hành trên acc cũ.","description":"Sản phẩm: Udemy Personal Plan. Gói/phiên bản: Dùng riêng. Loại tài khoản: Acc cấp sẵn. Thời hạn sử dụng: 1 tháng. Bảo hành: Bảo hành full. Ghi chú: Hình thức nâng cấp: acc cấp sẵn, dùng riêng. Có tỷ lệ lỗi; lỗi thì đổi acc luôn, không bảo hành trên acc cũ."}],"priceLabel":"Hết hàng","durationSummary":"1 tháng","planCount":1},
+      {"id":"grp-029","name":"Wordwall Pro","brand":"Wordwall","category":"Học tập & khóa học","image":"wordwall.net","glow":"linear-gradient(135deg,#3b82f6,#06b6d4,#0f766e)","description":"Sản phẩm: Wordwall Pro. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách; cần cung cấp tên đăng nhập và mật khẩu Wordwall.","plans":[{"id":"sp-044","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"120.000 đ","note":"Nâng cấp chính chủ trên tài khoản khách; cần cung cấp tên đăng nhập và mật khẩu Wordwall.","description":"Sản phẩm: Wordwall Pro. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách; cần cung cấp tên đăng nhập và mật khẩu Wordwall."},{"id":"sp-045","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 năm","warranty":"1 năm","price":"600.000 đ","note":"Nâng cấp chính chủ trên tài khoản khách.","description":"Sản phẩm: Wordwall Pro. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp chính chủ trên tài khoản khách."}],"priceLabel":"Từ 120.000 đ","durationSummary":"1 tháng / 1 năm","planCount":2},
+      {"id":"grp-030","name":"Wordwall Standard","brand":"Wordwall","category":"Học tập & khóa học","image":"wordwall.net","glow":"linear-gradient(135deg,#3b82f6,#06b6d4,#0f766e)","description":"Sản phẩm: Wordwall Standard. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách.","plans":[{"id":"sp-046","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"80.000 đ","note":"Nâng cấp chính chủ trên tài khoản khách.","description":"Sản phẩm: Wordwall Standard. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ trên tài khoản khách."},{"id":"sp-047","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 năm","warranty":"1 năm","price":"450.000 đ","note":"Nâng cấp chính chủ trên tài khoản khách.","description":"Sản phẩm: Wordwall Standard. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 năm. Ghi chú: Nâng cấp chính chủ trên tài khoản khách."}],"priceLabel":"Từ 80.000 đ","durationSummary":"1 tháng / 1 năm","planCount":2},
+      {"id":"grp-049","name":"Claude AI Max 5x","brand":"Claude","category":"Công nghệ phần mềm AI","image":"claude.ai","glow":"linear-gradient(135deg,#d97757,#f97316,#7c2d12)","description":"Sản phẩm: Claude AI Max 5x. Gói/phiên bản: Gói team Premium. Loại tài khoản: Chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ gói add team; sau khi add xong thì check mail bấm tham gia. Khách cần chủ động check hạn và báo gia hạn; nếu hết gói shop sẽ kick khỏi team, nên chủ động backup dữ liệu.","plans":[{"id":"sp-084","variant":"Gói team Premium","accountType":"Chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"1.900.000 đ","note":"Nâng cấp chính chủ gói add team; sau khi add xong thì check mail bấm tham gia. Khách cần chủ động check hạn và báo gia hạn; nếu hết gói shop sẽ kick khỏi team, nên chủ động backup dữ liệu.","description":"Sản phẩm: Claude AI Max 5x. Gói/phiên bản: Gói team Premium. Loại tài khoản: Chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ gói add team; sau khi add xong thì check mail bấm tham gia. Khách cần chủ động check hạn và báo gia hạn; nếu hết gói shop sẽ kick khỏi team, nên chủ động backup dữ liệu."}],"priceLabel":"Từ 1.900.000 đ","durationSummary":"1 tháng","planCount":1},
+      {"id":"grp-048","name":"Claude AI Pro","brand":"Claude","category":"Công nghệ phần mềm AI","image":"claude.ai","glow":"linear-gradient(135deg,#d97757,#f97316,#7c2d12)","description":"Sản phẩm: Claude AI Pro. Gói/phiên bản: Cấp sẵn, dùng riêng. Loại tài khoản: Chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ, gửi email để shop login vô up, không cần pass.","plans":[{"id":"sp-083","variant":"Cấp sẵn, dùng riêng","accountType":"Chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"Hết hàng","note":"Nâng cấp chính chủ, gửi email để shop login vô up, không cần pass.","description":"Sản phẩm: Claude AI Pro. Gói/phiên bản: Cấp sẵn, dùng riêng. Loại tài khoản: Chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp chính chủ, gửi email để shop login vô up, không cần pass."},{"id":"sp-085","variant":"GÓI TEAM","accountType":"Chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"420.000 đ","note":"Gói team, liên hệ shop để được tư vấn trước khi mua.","description":"Sản phẩm: Claude AI Pro. Gói/phiên bản: GÓI TEAM. Loại tài khoản: Chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Gói team, liên hệ shop để được tư vấn trước khi mua."}],"priceLabel":"Từ 420.000 đ","durationSummary":"1 tháng","planCount":2},
+      {"id":"grp-050","name":"ElevenLabs Creator","brand":"ElevenLabs","category":"Công nghệ phần mềm AI","image":"elevenlabs.io","glow":"linear-gradient(135deg,#ffffff,#cbd5e1,#475569)","description":"Sản phẩm: ElevenLabs Creator. Gói/phiên bản: Chính chủ - Acc cấp. Loại tài khoản: Tài khoản ElevenLabs. Thời hạn sử dụng: 3 tháng. Bảo hành: 3 tháng. Ghi chú: Tài khoản ElevenLabs 3 tháng. Hình thức nâng cấp: acc chính chủ/acc cấp sẵn dùng riêng. Gói nâng cấp Creator.","plans":[{"id":"sp-086","variant":"Chính chủ - Acc cấp","accountType":"Tài khoản ElevenLabs","duration":"3 tháng","warranty":"3 tháng","price":"Hết hàng","note":"Tài khoản ElevenLabs 3 tháng. Hình thức nâng cấp: acc chính chủ/acc cấp sẵn dùng riêng. Gói nâng cấp Creator.","description":"Sản phẩm: ElevenLabs Creator. Gói/phiên bản: Chính chủ - Acc cấp. Loại tài khoản: Tài khoản ElevenLabs. Thời hạn sử dụng: 3 tháng. Bảo hành: 3 tháng. Ghi chú: Tài khoản ElevenLabs 3 tháng. Hình thức nâng cấp: acc chính chủ/acc cấp sẵn dùng riêng. Gói nâng cấp Creator."},{"id":"sp-087","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản ElevenLabs","duration":"1 tháng","warranty":"1 tháng","price":"190.000 đ","note":"Tài khoản ElevenLabs 1 tháng. Hình thức nâng cấp: acc chính chủ/acc cấp sẵn dùng riêng. Gói nâng cấp Creator.","description":"Sản phẩm: ElevenLabs Creator. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản ElevenLabs. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Tài khoản ElevenLabs 1 tháng. Hình thức nâng cấp: acc chính chủ/acc cấp sẵn dùng riêng. Gói nâng cấp Creator."}],"priceLabel":"Từ 190.000 đ","durationSummary":"3 tháng / 1 tháng","planCount":2},
+      {"id":"grp-052","name":"Kling gói Pro 3000 credit","brand":"Kling","category":"Công nghệ phần mềm AI","image":"klingai.com","glow":"linear-gradient(135deg,#7c3aed,#06b6d4,#0f172a)","description":"Sản phẩm: Kling gói Pro 3000 credit. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Tài khoản cấp sẵn.","plans":[{"id":"sp-089","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản cấp sẵn","duration":"1 tháng","warranty":"1 tháng","price":"Hết hàng","note":"Tài khoản cấp sẵn.","description":"Sản phẩm: Kling gói Pro 3000 credit. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Tài khoản cấp sẵn."}],"priceLabel":"Hết hàng","durationSummary":"1 tháng","planCount":1},
+      {"id":"grp-051","name":"Kling gói Pro 4500 credit","brand":"Kling","category":"Công nghệ phần mềm AI","image":"klingai.com","glow":"linear-gradient(135deg,#7c3aed,#06b6d4,#0f172a)","description":"Sản phẩm: Kling gói Pro 4500 credit. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Tài khoản cấp sẵn, bảo hành theo số lượng credit.","plans":[{"id":"sp-088","variant":"Cấp sẵn dùng riêng","accountType":"Tài khoản cấp sẵn","duration":"1 tháng","warranty":"1 tháng","price":"Hết hàng","note":"Tài khoản cấp sẵn, bảo hành theo số lượng credit.","description":"Sản phẩm: Kling gói Pro 4500 credit. Gói/phiên bản: Cấp sẵn dùng riêng. Loại tài khoản: Tài khoản cấp sẵn. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Tài khoản cấp sẵn, bảo hành theo số lượng credit."}],"priceLabel":"Hết hàng","durationSummary":"1 tháng","planCount":1},
+      {"id":"grp-053","name":"Kling Standard","brand":"Kling","category":"Công nghệ phần mềm AI","image":"klingai.com","glow":"linear-gradient(135deg,#7c3aed,#06b6d4,#0f172a)","description":"Sản phẩm: Kling Standard. Gói/phiên bản: 1000-1100 credit. Loại tài khoản: Cấp sẵn dùng riêng. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Tài khoản cấp sẵn dùng riêng.","plans":[{"id":"sp-090","variant":"1000-1100 credit","accountType":"Cấp sẵn dùng riêng","duration":"1 tháng","warranty":"1 tháng","price":"210.000 đ","note":"Tài khoản cấp sẵn dùng riêng.","description":"Sản phẩm: Kling Standard. Gói/phiên bản: 1000-1100 credit. Loại tài khoản: Cấp sẵn dùng riêng. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Tài khoản cấp sẵn dùng riêng."}],"priceLabel":"Từ 210.000 đ","durationSummary":"1 tháng","planCount":1},
+      {"id":"grp-047","name":"Perplexity AI Pro 20$","brand":"Perplexity","category":"Công nghệ phần mềm AI","image":"perplexity.ai","glow":"linear-gradient(135deg,#14b8a6,#67e8f9,#0e7490)","description":"Sản phẩm: Perplexity AI Pro 20$. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp tài khoản chính chủ; khách hàng cần cung cấp tên đăng nhập và mật khẩu.","plans":[{"id":"sp-079","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 tháng","warranty":"1 tháng","price":"Hết hàng","note":"Nâng cấp tài khoản chính chủ; khách hàng cần cung cấp tên đăng nhập và mật khẩu.","description":"Sản phẩm: Perplexity AI Pro 20$. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp tài khoản chính chủ; khách hàng cần cung cấp tên đăng nhập và mật khẩu."},{"id":"sp-080","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"3 tháng","warranty":"1 tháng","price":"Hết hàng","note":"Nâng cấp tài khoản chính chủ; khách hàng cần cung cấp tên đăng nhập và mật khẩu.","description":"Sản phẩm: Perplexity AI Pro 20$. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 3 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp tài khoản chính chủ; khách hàng cần cung cấp tên đăng nhập và mật khẩu."},{"id":"sp-081","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"6 tháng","warranty":"1 tháng","price":"Hết hàng","note":"Nâng cấp tài khoản chính chủ; khách hàng cần cung cấp tên đăng nhập và mật khẩu.","description":"Sản phẩm: Perplexity AI Pro 20$. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 6 tháng. Bảo hành: 1 tháng. Ghi chú: Nâng cấp tài khoản chính chủ; khách hàng cần cung cấp tên đăng nhập và mật khẩu."},{"id":"sp-082","variant":"Chính chủ","accountType":"Nâng cấp chính chủ","duration":"1 năm","warranty":"1 tháng","price":"Hết hàng","note":"Nâng cấp tài khoản chính chủ; khách hàng cần cung cấp tên đăng nhập và mật khẩu.","description":"Sản phẩm: Perplexity AI Pro 20$. Gói/phiên bản: Chính chủ. Loại tài khoản: Nâng cấp chính chủ. Thời hạn sử dụng: 1 năm. Bảo hành: 1 tháng. Ghi chú: Nâng cấp tài khoản chính chủ; khách hàng cần cung cấp tên đăng nhập và mật khẩu."}],"priceLabel":"Hết hàng","durationSummary":"1 tháng / 3 tháng / 6 tháng / 1 năm","planCount":4}
+    ];
+
+    const $ = (id) => document.getElementById(id);
+    const els = {
+      totalProducts: $("totalProducts"), totalPlans: $("totalPlans"), resultCount: $("resultCount"),
+      featuredGrid: $("featuredGrid"), quickRail: $("quickRail"), productGroups: $("productGroups"), empty: $("empty"),
+      chips: $("chips"), categoryFilter: $("categoryFilter"), stockFilter: $("stockFilter"), searchInput: $("searchInput"), railNext: $("railNext"),
+      productModal: $("productModal"), modalSheet: $("modalSheet"), modalLogo: $("modalLogo"), modalTitle: $("modalTitle"), modalSub: $("modalSub"), modalProductImage: $("modalProductImage"), modalDesc: $("modalDesc"), modalPlanCount: $("modalPlanCount"), modalPlans: $("modalPlans"), selectedPlanBox: $("selectedPlanBox"), checkoutForm: $("checkoutForm"), customerName: $("customerName"), customerPhone: $("customerPhone"), createQrBtn: $("createQrBtn"), zaloGeneral: $("zaloGeneral"), paymentError: $("paymentError"), paymentResult: $("paymentResult"), qrImage: $("qrImage"), paymentAmount: $("paymentAmount"), paymentContent: $("paymentContent"), paymentPhone: $("paymentPhone"), paymentOrderCode: $("paymentOrderCode"), paymentNote: $("paymentNote"), paymentStatusBadge: $("paymentStatusBadge"), copyPaymentBtn: $("copyPaymentBtn"), copyOrderBtn: $("copyOrderBtn"), confirmPaymentBtn: $("confirmPaymentBtn"),
+      playerDisc: $("playerDisc"), audioPlayer: $("audioPlayer"), trackTitle: $("trackTitle"), trackArtist: $("trackArtist"), playerHint: $("playerHint"), playPauseBtn: $("playPauseBtn"), prevTrackBtn: $("prevTrackBtn"), nextTrackBtn: $("nextTrackBtn"), playlistTopBtn: $("playlistTopBtn"), categoryTab: $("categoryTab")
+    };
+    let productGroupsData = [];
+    let categories = [];
+    const priority = ["Netflix", "Chatgpt", "YouTube","Locket",  "Spotify", "CapCut", "Meitu", "Wink", "Claude"];
+    let activeCategory = "all";
+    let selectedGroup = null;
+    let selectedPlan = null;
+    let selectedPlanIndex = -1;
+    let lastPaymentContent = "";
+    let lastPaymentAmount = "";
+    let lastOrderCode = "";
+    let toastTimer = null;
+
+    function safe(text){return String(text ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+    function removeVietnameseTones(str){return String(str||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D")}
+    
+    // Hỗ trợ cả 2 kiểu ảnh:
+    // - image: "youtube.com"              => tự lấy favicon domain
+    // - image: "https://.../logo.png"     => hiển thị ảnh trực tiếp
+    // - image: "assets/icons/logo.png"    => hiển thị ảnh local trên GitHub
+    function imgHtml(group){
+      if(!group.image) return `<span class="icon-fallback">${safe(initials(group?.name))}</span>`;
+      const raw = String(group.image || "").trim();
+      const isDirectImage = /^(https?:\/\/|data:image\/|assets\/|\.\/|\/)/i.test(raw) && /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(raw);
+      const isLocalPath = /^(assets\/|\.\/|\/)/i.test(raw);
+      const url = (isDirectImage || isLocalPath)
+        ? raw
+        : `https://www.google.com/s2/favicons?domain=${raw.replace(/^https?:\/\//i, "").replace(/\/.*$/, "")}&sz=256`;
+      return `<img src="${safe(url)}" onerror="this.outerHTML='<span class=\\'icon-fallback\\'>${safe(initials(group?.name))}</span>';" alt="${safe(group.name)}" loading="lazy" decoding="async">`;
+    }
+    
+    function initials(name){return String(name||"SP").split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join("").toUpperCase() || "SP"}
+    function isPlanOut(plan){return /hết\s*hàng/i.test(String(plan?.price||""))}
+    function extractAmount(price){const digits=String(price||"").replace(/[^0-9]/g,"");return digits ? Number(digits) : 0}
+    function isFixedPrice(plan){return extractAmount(plan?.price)>0 && !isPlanOut(plan)}
+    function isGroupOut(group){return !group.plans.some(isFixedPrice)}
+    function planLabel(plan){return plan?.variant || plan?.duration || "Liên hệ"}
+    function sortProducts(list){return [...list].sort((a,b)=>score(a)-score(b));}
+    function score(group){const name=(group.name+" "+group.brand).toLowerCase();const idx=priority.findIndex(p=>name.includes(p.toLowerCase()));return idx === -1 ? 999 : idx;}
+    function bestFeatured(){return sortProducts(productGroupsData).slice(0,6)}
+    function railFeatured(){return sortProducts(productGroupsData).slice(0,14)}
+
+
+    function recomputeCategories(){
+      categories = [...new Set(productGroupsData.map(g => g.category).filter(Boolean))];
+    }
+
+    function normalizePrice(value){
+      const text = String(value ?? "").trim();
+      if(!text) return "Liên hệ";
+      if(/hết\s*hàng/i.test(text)) return "Hết hàng";
+      if(/liên\s*hệ/i.test(text)) return "Liên hệ";
+      const digits = text.replace(/[^0-9]/g, "");
+      return digits ? Number(digits).toLocaleString("vi-VN") + " đ" : text;
+    }
+
+    function buildGroupsFromRows(rows){
+      const groups = {};
+      rows.forEach((r, index) => {
+        const id = String(r.id || r.groupId || r.productId || "grp-" + (index + 1)).trim();
+        if(!groups[id]){
+          groups[id] = {
+            id,
+            name: String(r.name || r.productName || "Sản phẩm").trim(),
+            brand: String(r.brand || "").trim(),
+            category: String(r.category || "Khác").trim(),
+            image: String(r.image || "").trim(),
+            glow: String(r.glow || "linear-gradient(135deg,#2563eb,#f59e0b)").trim(),
+            description: String(r.description || "").trim(),
+            plans: [],
+            priceLabel: "",
+            durationSummary: "",
+            planCount: 0
+          };
+        }
+        groups[id].plans.push({
+          id: String(r.planId || "sp-" + (index + 1)).trim(),
+          variant: String(r.variant || r.plan || "Gói dịch vụ").trim(),
+          accountType: String(r.accountType || "").trim(),
+          duration: String(r.duration || "").trim(),
+          warranty: String(r.warranty || "").trim(),
+          price: normalizePrice(r.price),
+          note: String(r.note || "").trim(),
+          description: String(r.description || "").trim()
+        });
+      });
+      return Object.values(groups).map(g => {
+        g.planCount = g.plans.length;
+        g.durationSummary = [...new Set(g.plans.map(p => p.duration).filter(Boolean))].join(" / ");
+        const prices = g.plans.map(p => extractAmount(p.price)).filter(n => n > 0);
+        g.priceLabel = prices.length ? "Từ " + Math.min(...prices).toLocaleString("vi-VN") + " đ" : (g.plans.some(p => isPlanOut(p)) ? "Hết hàng" : "Liên hệ");
+        return g;
+      });
+    }
+
+    function normalizeProductData(data){
+      const arr = Array.isArray(data) ? data : (Array.isArray(data?.products) ? data.products : []);
+      if(!arr.length) return [];
+      if(arr[0] && Array.isArray(arr[0].plans)){
+        return arr.map(g => ({
+          ...g,
+          category: g.category || "Khác",
+          plans: Array.isArray(g.plans) ? g.plans : [],
+          planCount: g.planCount || (Array.isArray(g.plans) ? g.plans.length : 0),
+          priceLabel: g.priceLabel || "Liên hệ",
+          durationSummary: g.durationSummary || ""
+        })).filter(g => g.name && g.plans.length);
+      }
+      return buildGroupsFromRows(arr);
+    }
+
+    // Dùng JSONP để tránh lỗi CORS khi web chạy trên GitHub Pages gọi Google Apps Script.
+    function loadJsonp(url){
+      return new Promise((resolve, reject) => {
+        const callbackName = "__shopmanhgold_cb_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
+        const script = document.createElement("script");
+        const sep = url.includes("?") ? "&" : "?";
+        const timer = setTimeout(() => {
+          cleanup();
+          reject(new Error("Quá thời gian tải dữ liệu Google Sheets"));
+        }, 15000);
+        function cleanup(){
+          clearTimeout(timer);
+          delete window[callbackName];
+          script.remove();
+        }
+        window[callbackName] = data => {
+          cleanup();
+          resolve(data);
+        };
+        script.onerror = () => {
+          cleanup();
+          reject(new Error("Không tải được Google Sheets API"));
+        };
+        script.src = url + sep + "callback=" + encodeURIComponent(callbackName) + "&v=" + Date.now();
+        document.head.appendChild(script);
+      });
+    }
+
+    async function loadProductData(){
+      const useSheetApi = SHEET_API_URL && !SHEET_API_URL.includes("DAN_LINK") && /^https?:\/\//i.test(SHEET_API_URL);
+      if(useSheetApi){
+        try{
+          const data = await loadJsonp(SHEET_API_URL);
+          const groups = normalizeProductData(data);
+          if(!groups.length) throw new Error("Google Sheets không có dữ liệu hợp lệ");
+          productGroupsData = groups;
+          recomputeCategories();
+          return;
+        }catch(err){
+          console.warn("Không tải được dữ liệu Google Sheets, dùng dữ liệu mẫu trong file:", err);
+          toast("Không tải được Sheet, dùng dữ liệu mẫu");
+        }
+      }
+      productGroupsData = DEFAULT_PRODUCT_GROUPS;
+      recomputeCategories();
+    }
+
+    function renderStats(){
+      els.totalProducts.textContent = productGroupsData.length;
+      els.totalPlans.textContent = productGroupsData.reduce((n,g)=>n+g.plans.length,0);
+    }
+    function renderFilters(){
+      const chipHtml = [`<button class="chip ${activeCategory==='all'?'active':''}" type="button" data-category="all">Tất cả danh mục</button>`]
+        .concat(categories.map(c => `<button class="chip ${activeCategory===c?'active':''}" type="button" data-category="${safe(c)}">${safe(shortCategory(c))}</button>`)).join("");
+      els.chips.innerHTML = chipHtml;
+      els.categoryFilter.innerHTML = `<option value="all">Tất cả danh mục</option>` + categories.map(c=>`<option value="${safe(c)}">${safe(c)}</option>`).join("");
+      els.categoryFilter.value = activeCategory;
+    }
+    function shortCategory(c){
+      if(c.includes("Giải trí")) return "Giải trí";
+      if(c.includes("Thiết kế")) return "Thiết kế";
+      if(c.includes("Học tập")) return "Học tập";
+      if(c.includes("AI")) return "AI";
+      return c;
+    }
+    function renderFeatured(){
+      els.featuredGrid.innerHTML = bestFeatured().map(g => `<button class="featured-item" type="button" data-open="${safe(g.id)}"><span class="icon-box">${imgHtml(g)}</span><span>${safe(featureTitle(g))}</span></button>`).join("");
+      els.quickRail.innerHTML = railFeatured().map(g => `<button class="app-icon" type="button" data-open="${safe(g.id)}" title="${safe(g.name)}">${imgHtml(g)}</button>`).join("");
+    }
+    function featureTitle(g){
+      const name = g.name.replace(/\s+SVIP/i," Premium").replace(/Capcut/i,"CapCut");
+      return name.length > 22 ? name.split(" ").slice(0,2).join(" ") : name;
+    }
+    function filteredGroups(){
+      const q=removeVietnameseTones(els.searchInput.value.trim().toLowerCase());
+      const stock=els.stockFilter.value;
+      const list = productGroupsData.filter(g=>{
+        const planText = g.plans.map(p => [p.variant,p.accountType,p.duration,p.warranty,p.price,p.note,p.description].join(" ")).join(" ");
+        const text=removeVietnameseTones([g.name,g.brand,g.category,g.description,g.priceLabel,g.durationSummary,planText].join(" ").toLowerCase());
+        const matchSearch=!q || text.includes(q);
+        const matchCategory=activeCategory==="all" || g.category===activeCategory;
+        const matchStock=stock==="all" || (stock==="available" && !isGroupOut(g)) || (stock==="out" && isGroupOut(g));
+        return matchSearch && matchCategory && matchStock;
+      });
+      return sortProducts(list);
+    }
+    function productCard(group){
+      const priceClass = isGroupOut(group) ? " out-price" : "";
+      return `<article class="product-card" data-open="${safe(group.id)}" style="--photo-glow:${safe(group.glow||'linear-gradient(135deg,#22d3ee,#d946ef)')}">
+        <div class="product-icon">${imgHtml(group)}</div>
+        <div>
+          <div class="product-name">${safe(group.name)}</div>
+          <div class="product-meta">${safe(group.planCount)} gói · ${safe(group.brand)}</div>
+        </div>
+        <div class="product-price${priceClass}">${safe(group.priceLabel || "Liên hệ")}</div>
+      </article>`;
+    }
+    function renderProducts(){
+      renderFilters();
+      const list=filteredGroups();
+      els.resultCount.textContent=list.length;
+      els.empty.style.display=list.length?"none":"block";
+      els.productGroups.innerHTML=list.map(productCard).join("");
+    }
+
+    function openProductModal(groupId){
+      selectedGroup = productGroupsData.find(g=>g.id===groupId);
+      if(!selectedGroup) return;
+      selectedPlan=null; selectedPlanIndex=-1; lastPaymentAmount=""; lastPaymentContent="";
+      clearPaymentResult();
+      els.customerName.value=""; els.customerPhone.value="";
+      els.modalLogo.innerHTML=imgHtml(selectedGroup);
+      els.modalProductImage.innerHTML=imgHtml(selectedGroup);
+      els.modalTitle.textContent=selectedGroup.name;
+      els.modalSub.textContent=`${selectedGroup.brand} · ${selectedGroup.category}`;
+      els.modalDesc.textContent=selectedGroup.description || "Liên hệ shop để được tư vấn chi tiết.";
+      els.modalPlanCount.textContent=`${selectedGroup.planCount} gói`;
+      els.modalPlans.innerHTML=selectedGroup.plans.map(planOption).join("");
+      els.selectedPlanBox.innerHTML=`<b>Chưa chọn gói.</b><br>Chạm vào một gói ở phía trên để tạo QR đúng số tiền.`;
+      els.zaloGeneral.href=zaloLink+"?text="+encodeURIComponent("Xin chào shop, tôi muốn tư vấn sản phẩm: "+selectedGroup.name);
+      els.productModal.classList.add("active");
+      els.productModal.setAttribute("aria-hidden","false");
+      document.body.style.overflow="hidden";
+      vibrate(10);
+    }
+    function closeProductModal(){
+      els.productModal.classList.remove("active");
+      els.productModal.setAttribute("aria-hidden","true");
+      document.body.style.overflow="";
+    }
+    function planOption(plan,index){
+      const unavailable=!isFixedPrice(plan);
+      return `<button class="plan-option${unavailable?' unavailable':''}" type="button" data-plan-index="${index}">
+        <span>
+          <span class="plan-name">Gói ${index+1}: ${safe(plan.variant || selectedGroup.name)}</span>
+          <span class="plan-note">${safe(plan.note || plan.description || "Liên hệ shop để được tư vấn chi tiết.")}</span>
+          <span class="plan-meta"><span class="meta">⏱ ${safe(plan.duration || "Liên hệ")}</span><span class="meta">🛡 ${safe(plan.warranty || "Theo gói")}</span><span class="meta">${safe(plan.accountType || "Tài khoản")}</span></span>
+        </span>
+        <span class="plan-price${isPlanOut(plan)?' out-price':''}">${safe(plan.price || "Liên hệ")}</span>
+      </button>`;
+    }
+    function selectPlan(index){
+      if(!selectedGroup || !selectedGroup.plans[index]) return;
+      selectedPlanIndex=index; selectedPlan=selectedGroup.plans[index]; clearPaymentResult();
+      els.modalPlans.querySelectorAll(".plan-option").forEach((b,i)=>b.classList.toggle("active",i===index));
+      els.selectedPlanBox.innerHTML=`<b>Đã chọn:</b> ${safe(selectedGroup.name)}<br><b>Gói:</b> ${safe(selectedPlan.variant || selectedPlan.duration || "Liên hệ")}<br><b>Thời hạn:</b> ${safe(selectedPlan.duration || "Liên hệ")} · <b>Giá:</b> ${safe(selectedPlan.price || "Liên hệ")}`;
+      els.zaloGeneral.href=createZaloOrderLink(false);
+      els.customerName.focus({preventScroll:true});
+      els.checkoutForm.scrollIntoView({behavior:"smooth",block:"center"});
+      vibrate(12);
+    }
+    function showPaymentError(message){els.paymentError.textContent=message;els.paymentError.style.display="block";vibrate(20)}
+    function clearPaymentResult(){
+      els.paymentError.textContent="";
+      els.paymentError.style.display="none";
+      els.paymentResult.classList.remove("active");
+      els.qrImage.removeAttribute("src");
+      lastPaymentContent="";
+      lastPaymentAmount="";
+      lastOrderCode="";
+      if(els.paymentOrderCode) els.paymentOrderCode.textContent="-";
+      if(els.paymentNote) els.paymentNote.textContent="Quý khách vui lòng quét mã QR bằng ứng dụng ngân hàng. Sau khi chuyển khoản thành công, hãy bấm 'Tôi đã chuyển khoản' để sao chép mã đơn và gửi cho chúng tôi qua Zalo";
+      if(els.paymentStatusBadge) els.paymentStatusBadge.innerHTML='<span class="pulse-dot"></span> Đang chờ khách chuyển khoản';
+      if(els.confirmPaymentBtn) els.confirmPaymentBtn.textContent="Tôi đã chuyển khoản";
+    }
+    function normalizeCustomerName(value){return String(value||"").trim().replace(/\s+/g," ")}
+    function normalizePhone(value){return String(value||"").replace(/[^0-9]/g,"")}
+    function productCode(group,plan){
+      const base = removeVietnameseTones((group.brand || group.name || "sp").toLowerCase()).replace(/[^a-z0-9]/g,"").slice(0,18) || "sp";
+      const duration = removeVietnameseTones([plan.duration,plan.variant].join(" ").toLowerCase());
+      let d="";
+      const m=duration.match(/(\d+)\s*thang/); if(m) d=m[1]+"m";
+      const y=duration.match(/(\d+)\s*nam/); if(y) d=y[1]+"y";
+      const credit=duration.match(/(\d{3,5})\s*credit/); if(credit) d=credit[1]+"cr";
+      return (base + d).slice(0,28);
+    }
+    function createTransferContent(group,plan,name){
+      const cleanName = removeVietnameseTones(normalizeCustomerName(name)).toUpperCase().replace(/[^A-Z0-9 ]/g,"").replace(/\s+/g," ").trim();
+      return (cleanName + " " + productCode(group,plan)).trim().slice(0,70);
+    }
+    function pad2(value){return String(value).padStart(2,"0")}
+    function createOrderCode(phone){
+      const now = new Date();
+      const date = String(now.getFullYear()).slice(2) + pad2(now.getMonth()+1) + pad2(now.getDate());
+      const time = pad2(now.getHours()) + pad2(now.getMinutes()) + pad2(now.getSeconds());
+      const suffix = String(phone || "").slice(-4) || String(Math.floor(1000 + Math.random()*9000));
+      return `SMG-${date}-${time}-${suffix}`;
+    }
+    function createVietQrUrl(amount,content){
+      const accountName = bankAccountName ? "&accountName=" + encodeURIComponent(bankAccountName) : "";
+      return `https://img.vietqr.io/image/${bankId}-${bankAccountNo}-compact2.png?amount=${encodeURIComponent(amount)}&addInfo=${encodeURIComponent(content)}${accountName}`;
+    }
+    function getOrderText(confirmed=false){
+      const name=normalizeCustomerName(els.customerName.value);
+      const phone=normalizePhone(els.customerPhone.value);
+      const lines=[];
+      lines.push(confirmed ? "Xin chào shop, tôi đã chuyển khoản. Shop kiểm tra và xử lý đơn giúp mình." : "Xin chào shop, tôi muốn đặt đơn hàng này.");
+      if(lastOrderCode) lines.push("Mã đơn hàng: " + lastOrderCode);
+      if(selectedGroup) lines.push("Sản phẩm: " + selectedGroup.name);
+      if(selectedPlan){
+        lines.push("Gói: " + (selectedPlan.variant || selectedPlan.duration || ""));
+        lines.push("Thời hạn: " + (selectedPlan.duration || "Liên hệ"));
+        lines.push("Giá: " + (selectedPlan.price || "Liên hệ"));
+      }
+      lines.push("Họ tên: " + (name || ""));
+      lines.push("SĐT: " + (phone || ""));
+      if(lastPaymentAmount) lines.push("Số tiền chuyển khoản: " + Number(lastPaymentAmount).toLocaleString("vi-VN") + " đ");
+      if(lastPaymentContent) lines.push("Nội dung chuyển khoản: " + lastPaymentContent);
+      lines.push("Tài khoản nhận: Vietcombank " + bankAccountNo + " - " + bankAccountName);
+      lines.push("Ghi chú: " + (confirmed ? "Khách đã bấm xác nhận đã chuyển khoản trên website. Shop vui lòng kiểm tra giao dịch theo mã đơn và nội dung chuyển khoản." : "Khách đang tạo đơn từ website shopmanhgold."));
+      return lines.filter(Boolean).join("\n");
+    }
+    function createZaloOrderLink(hasPayment,confirmed=false){
+      const text=getOrderText(confirmed && hasPayment);
+      return zaloLink+"?text="+encodeURIComponent(text);
+    }
+    function generatePaymentQr(){
+      if(!selectedGroup || !selectedPlan) return showPaymentError("Bạn cần chọn một gói sản phẩm trước khi tạo QR.");
+      const name=normalizeCustomerName(els.customerName.value); const phone=normalizePhone(els.customerPhone.value);
+      if(!name){els.customerName.focus();return showPaymentError("Vui lòng nhập họ tên khách hàng.")}
+      if(!phone || phone.length<9 || phone.length>11){els.customerPhone.focus();return showPaymentError("Vui lòng nhập số điện thoại hợp lệ, chỉ gồm 9-11 chữ số.")}
+      const amount=extractAmount(selectedPlan.price);
+      if(!amount){els.zaloGeneral.href=createZaloOrderLink(false);return showPaymentError("Gói này đang hết hàng/chưa có giá cố định. Hãy bấm “Gửi đơn Zalo” để shop tư vấn tình trạng mới nhất.")}
+      const content=createTransferContent(selectedGroup,selectedPlan,name);
+      lastPaymentContent=content; lastPaymentAmount=amount; lastOrderCode=createOrderCode(phone);
+      els.qrImage.src=createVietQrUrl(amount,content);
+      els.paymentAmount.textContent=Number(amount).toLocaleString("vi-VN")+" đ";
+      els.paymentContent.textContent=content;
+      els.paymentPhone.textContent=phone;
+      if(els.paymentOrderCode) els.paymentOrderCode.textContent=lastOrderCode;
+      els.zaloGeneral.href=createZaloOrderLink(true);
+      els.paymentResult.classList.add("active");
+      els.paymentResult.scrollIntoView({behavior:"smooth",block:"center"});
+      toast("Đã tạo QR thanh toán");
+    }
+    async function copyText(text,message){try{await navigator.clipboard.writeText(text);toast(message||"Đã copy")}catch(err){window.prompt("Copy nội dung này:",text)}}
+    function copyPaymentContent(){if(!lastPaymentContent)return showPaymentError("Bạn cần tạo QR trước khi copy nội dung chuyển khoản.");copyText(lastPaymentContent,"Đã copy nội dung CK")}
+    function copyOrder(){
+      if(!selectedGroup)return;
+      copyText(getOrderText(false),"Đã copy đơn hàng");
+    }
+    async function confirmPayment(){
+      if(!lastPaymentContent || !lastPaymentAmount || !lastOrderCode){
+        return showPaymentError("Bạn cần tạo QR thanh toán trước, sau đó mới bấm xác nhận đã chuyển khoản.");
+      }
+      const orderText=getOrderText(true);
+      try{
+        await navigator.clipboard.writeText(orderText);
+        toast("Đã copy đơn hàng, đang mở Zalo");
+      }catch(err){
+        window.prompt("Copy đơn hàng này:",orderText);
+      }
+      if(els.confirmPaymentBtn) els.confirmPaymentBtn.textContent="Đã copy đơn hàng ✓";
+      if(els.paymentStatusBadge) els.paymentStatusBadge.innerHTML='<span class="pulse-dot"></span> Đã bấm xác nhận chuyển khoản';
+      if(els.paymentNote) els.paymentNote.textContent="Đơn hàng đã được copy. Zalo sẽ mở kèm ghi chú: khách đã chuyển khoản, shop vui lòng kiểm tra giao dịch và xử lý đơn.";
+      const url=createZaloOrderLink(true,true);
+      const opened=window.open(url,"_blank","noopener");
+      if(!opened) window.location.href=url;
+    }
+    function toast(message){const el=$("toast");el.textContent=message;el.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove("show"),1900)}
+    function vibrate(ms){if(navigator.vibrate) navigator.vibrate(ms)}
+
+ const playlist=[
+  {
+    title:"Em",
+    artist:"Binz ft. SOOBIN",
+    src:"music/07. Em - Binz (feat. SOOBIN)  Gặp Lại Album - Binz Da Poet.mp3"
+  },
+  {
+    title:"Buông",
+    artist:"HNGLE / hưng lê",
+    src:"music/Hngle - Buông  Official Music Video - HNGLE _ hưng lê.mp3"
+  },
+  {
+    title:"Tìm em ft. Bảo Anh",
+    artist:"HNGLE / hưng lê",
+    src:"music/Hngle - Tìm em ft. Bảo Anh  Official Music Video - HNGLE _ hưng lê.mp3"
+  },
+  {
+    title:"Ngày Rời Chuyến Bay",
+    artist:"Minh Huy ft Pinny",
+    src:"music/Minh Huy - Ngày Rời Chuyến Bay ft Pinny ( Official Music Video ) - Minh Huy Official.mp3"
+  },
+  {
+    title:"Trước Khi Em Tồn Tại",
+    artist:"Thắng Việt Anh Cover / Trạm Cảm Xúc",
+    src:"music/Trước Khi Em Tồn Tại (Piano Version) - Thắng  Việt Anh Cover (MV Lyric) - Trạm Cảm Xúc.mp3"
+  },
+  {
+    title:"Vết Thương",
+    artist:"fishy",
+    src:"music/fishy - VẾT THƯƠNG - OFFICIAL MUSIC VIDEO - fishy.mp3"
+  }
+];
+    let currentTrackIndex=0,isPlaying=false;
+    function updatePlayerUI(){const t=playlist[currentTrackIndex]||{};els.trackTitle.textContent=t.title||"Chưa có bài hát";els.trackArtist.textContent=t.artist||"";els.playPauseBtn.textContent=isPlaying?"❚❚":"▶";els.playerDisc.classList.toggle("spin",isPlaying)}
+    function loadTrack(index,autoplay=false){
+      currentTrackIndex=(index+playlist.length)%playlist.length;
+      const track=playlist[currentTrackIndex];
+      try{
+        const url = new URL(track.src, location.href).href;
+        console.debug('Loading audio URL:', url);
+        els.audioPlayer.src = url;
+      }catch(err){
+        console.warn('Invalid URL for audio, using raw src:', track.src, err);
+        els.audioPlayer.src = track.src;
+      }
+      els.audioPlayer.load();
+      els.audioPlayer.muted=false;
+      updatePlayerUI();
+      if(autoplay){
+        const testUrl = els.audioPlayer.src;
+        try{
+          fetch(testUrl, {method:'HEAD'}).then(res=>{
+            if(res && (res.status===200 || res.status===206)){
+              setTimeout(()=>playCurrentTrack(),120);
+            } else {
+              console.warn('Audio HEAD check failed', res && res.status);
+              toast('Không tải được file nhạc (HTTP '+(res?res.status:'?')+'). Bấm ▶ để thử lại.');
+            }
+          }).catch(err=>{
+            console.warn('Audio HEAD fetch error', err);
+            setTimeout(()=>playCurrentTrack(),120);
+          });
+        }catch(e){
+          setTimeout(()=>playCurrentTrack(),120);
+        }
+      }
+    }
+    async function playCurrentTrack(){
+      try{
+        els.audioPlayer.muted=false;
+        await els.audioPlayer.play();
+        isPlaying=true;
+        updatePlayerUI();
+        toast("Đang phát: "+playlist[currentTrackIndex].title);
+      }catch(e){
+        isPlaying=false;
+        updatePlayerUI();
+        console.warn('playCurrentTrack error', e);
+        const message = e && e.name === "NotAllowedError"
+          ? "Trình duyệt chặn autoplay — bấm ▶ để phát"
+          : (e && e.message) ? ("Lỗi phát nhạc: "+e.message) : "Không thể phát file nhạc này";
+        toast(message);
+      }
+    }
+    function pauseCurrentTrack(){els.audioPlayer.pause();isPlaying=false;updatePlayerUI()}
+    function togglePlayback(){isPlaying?pauseCurrentTrack():playCurrentTrack()}
+    function prevTrack(){loadTrack(currentTrackIndex-1,isPlaying)}
+    function nextTrack(){loadTrack(currentTrackIndex+1,isPlaying)}
+
+    function bindEvents(){
+      els.searchInput.addEventListener("input",renderProducts);
+      els.stockFilter.addEventListener("change",renderProducts);
+      els.categoryFilter.addEventListener("change",()=>{activeCategory=els.categoryFilter.value;renderProducts()});
+      els.chips.addEventListener("click",e=>{const btn=e.target.closest("[data-category]");if(!btn)return;activeCategory=btn.dataset.category;renderProducts();});
+      document.addEventListener("click",e=>{
+        const openBtn=e.target.closest("[data-open]"); if(openBtn){e.preventDefault();openProductModal(openBtn.dataset.open);return;}
+        const planBtn=e.target.closest("[data-plan-index]"); if(planBtn){selectPlan(Number(planBtn.dataset.planIndex));return;}
+        if(e.target.closest("[data-close]")) closeProductModal();
+      });
+      els.productModal.addEventListener("click",e=>{if(e.target===els.productModal) closeProductModal()});
+      document.addEventListener("keydown",e=>{if(e.key==="Escape") closeProductModal()});
+      els.customerName.addEventListener("input",()=>{clearPaymentResult(); if(selectedPlan) els.zaloGeneral.href=createZaloOrderLink(false)});
+      els.customerPhone.addEventListener("input",()=>{clearPaymentResult(); if(selectedPlan) els.zaloGeneral.href=createZaloOrderLink(false)});
+      els.createQrBtn.addEventListener("click",generatePaymentQr);
+      els.copyPaymentBtn.addEventListener("click",copyPaymentContent);
+      els.copyOrderBtn.addEventListener("click",copyOrder);
+      if(els.confirmPaymentBtn) els.confirmPaymentBtn.addEventListener("click",confirmPayment);
+      els.railNext.addEventListener("click",()=>els.quickRail.scrollBy({left:360,behavior:"smooth"}));
+      els.categoryTab.addEventListener("click",()=>setTimeout(()=>els.chips.scrollIntoView({behavior:"smooth",block:"center"}),20));
+      els.playPauseBtn.addEventListener("click",togglePlayback);els.prevTrackBtn.addEventListener("click",prevTrack);els.nextTrackBtn.addEventListener("click",nextTrack);els.audioPlayer.addEventListener("ended",nextTrack);els.audioPlayer.addEventListener("play",()=>{isPlaying=true;updatePlayerUI()});els.audioPlayer.addEventListener("pause",()=>{isPlaying=false;updatePlayerUI()});els.audioPlayer.addEventListener("error",()=>{isPlaying=false;updatePlayerUI();toast("Không thể phát file nhạc này")});els.playlistTopBtn.addEventListener("click",()=>{document.getElementById("musicPlayer").scrollIntoView?.({behavior:"smooth"});toast("Bấm ▶ để phát playlist")});
+    }
+    async function boot(){
+      bindEvents();
+      els.empty.style.display = "block";
+      els.empty.textContent = "Đang tải dữ liệu sản phẩm...";
+      await loadProductData();
+      els.empty.textContent = "Không tìm thấy sản phẩm phù hợp. Hãy thử từ khóa khác hoặc chọn “Tất cả”.";
+      renderStats();
+      renderFeatured();
+      renderProducts();
+      const isTouchDevice = window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
+      if(isTouchDevice){
+        const startPlaybackOnFirstInteraction = () => {
+          loadTrack(0,true);
+          window.removeEventListener("pointerdown", startPlaybackOnFirstInteraction);
+          window.removeEventListener("keydown", startPlaybackOnFirstInteraction);
+        };
+        window.addEventListener("pointerdown", startPlaybackOnFirstInteraction, { once: true });
+        window.addEventListener("keydown", startPlaybackOnFirstInteraction, { once: true });
+      } else {
+        loadTrack(0,true);
+      }
+    }
+    boot();
+  </script>
+</body>
+</html>
